@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.css';
-import App from './App';
+import EscolaWebApp from './EscolaWebApp';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <EscolaWebApp />
   </React.StrictMode>,
   document.getElementById('root')
 );
