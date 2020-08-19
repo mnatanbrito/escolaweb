@@ -1,18 +1,12 @@
 import React from 'react';
-import {
-  Flex,
-  Box,
-  Stack,
-  InputGroup,
-  InputLeftElement,
-  Icon,
-  Input,
-  Text,
-  Heading,
-  Button,
-} from '@chakra-ui/core';
+import { Flex, Box, Stack, Heading } from '@chakra-ui/core';
+
+import SignInForm from './SignInForm';
 
 export default function SignIn() {
+  const onSubmit = (formValues) => {
+    console.log(formValues);
+  };
   return (
     <Flex
       flex="1"
@@ -71,26 +65,7 @@ export default function SignIn() {
           alignItems="center"
           justifyContent="center"
         >
-          <Stack spacing={3} width={0.8}>
-            <Text color="primaryBlue" fontSize="2xl">
-              Entrar
-            </Text>
-            <InputGroup>
-              <InputLeftElement
-                children={<Icon name="email" color="gray.300" />}
-              />
-              <Input type="text" placeholder="Email" maxLength={140} />
-            </InputGroup>
-            <InputGroup>
-              <InputLeftElement
-                children={<Icon name="lock" color="gray.300" />}
-              />
-              <Input type="password" placeholder="Senha" maxLength={20} />
-            </InputGroup>
-            <Button color="white" bg="primaryBlue" variant="solid">
-              Submit
-            </Button>
-          </Stack>
+          <SignInForm onSubmit={onSubmit} />
         </Box>
       </Box>
     </Flex>
