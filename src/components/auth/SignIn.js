@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Flex, Box, Stack, Heading } from '@chakra-ui/core';
 
 import SignInForm from './SignInForm';
+import AuthContext from './AuthContext';
 
 export default function SignIn() {
-  const onSubmit = (formValues) => {
-    console.log(formValues);
+  const authContext = useContext(AuthContext);
+
+  const onSubmit = async ({ email, senha }) => {
+    try {
+      await authContext.signInWithEmailAndPassword(email, senha);
+    } catch (err) {
+      console.log(`ocorreu um erro ao realizar o sign in: ${err.message}`);
+    }
   };
   return (
     <Flex

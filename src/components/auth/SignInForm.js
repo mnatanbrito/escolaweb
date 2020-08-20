@@ -9,11 +9,13 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
+  Link,
+  Box,
 } from '@chakra-ui/core';
 import { Formik, Form } from 'formik';
 
 import signInSchema from './signInSchema';
+import featureFlags from '../../shared/featureFlags';
 
 const initialValues = {
   email: '',
@@ -56,16 +58,11 @@ export default function SignInForm({ onSubmit }) {
                   onChange={(ev) => setFieldValue('email', ev.target.value)}
                 />
               </InputGroup>
-              {!errors.email && (
-                <FormHelperText id="email-helper-text" textAlign="right">
-                  Ex. maria@gmail.com
-                </FormHelperText>
-              )}
               <FormErrorMessage textAlign="right">
                 {errors.email}
               </FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={errors.email && touched.email}>
+            <FormControl isInvalid={errors.senha && touched.senha}>
               <InputGroup>
                 <InputLeftElement
                   children={<Icon name="lock" color="gray.300" />}
@@ -92,6 +89,22 @@ export default function SignInForm({ onSubmit }) {
             >
               Entrar
             </Button>
+            {featureFlags.SIGN_UP_ENABLED && (
+              <Box
+                display="flex"
+                flex={1}
+                justifyContent="flex-start"
+                alignItems="center"
+              >
+                <Text color="gray.800" fontSize="xs" lineHeight={1}>
+                  Ainda não possui uma conta?
+                </Text>
+                {<>&nbsp;</>}
+                <Link color="primaryBlue" fontSize="xs" lineHeight={1}>
+                  Cadastre-se
+                </Link>
+              </Box>
+            )}
           </Stack>
         </Form>
       )}

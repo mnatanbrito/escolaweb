@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
+import './shared/i18n';
 import EscolaWebApp from './EscolaWebApp';
 import * as serviceWorker from './serviceWorker';
 
