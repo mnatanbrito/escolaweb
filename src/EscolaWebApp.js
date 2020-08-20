@@ -7,6 +7,8 @@ import store from './shared/store';
 import configureFirebaseApp from './shared/firebase';
 import GateKeeper from './components/auth/GateKeeper';
 import AuthContext from './components/auth/AuthContext';
+import BaseLayout from './shared/components/BaseLayout';
+import Router from './shared/components/Router';
 
 const firebaseApp = configureFirebaseApp();
 
@@ -17,7 +19,9 @@ export default function EscolaWebApp() {
       <AuthContext.Provider value={firebaseApp.auth()}>
         <Provider store={store}>
           <GateKeeper>
-            <h2>Hello World</h2>
+            <BaseLayout>
+              <Router />
+            </BaseLayout>
           </GateKeeper>
         </Provider>
       </AuthContext.Provider>

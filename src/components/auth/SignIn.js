@@ -19,12 +19,10 @@ export default function SignIn() {
       flex="1"
       justify="center"
       align="center"
-      style={{
-        height: '100vh',
-        borderWidth: 1,
-        borderColor: 'gray',
-        backgroundColor: '#F7FAFC',
-      }}
+      bg="gray.50"
+      borderColor="gray"
+      borderWidth={1}
+      height="100vh"
     >
       <Box
         width={[
