@@ -8,7 +8,7 @@ import {
   Button,
   Text,
   Avatar,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 import AuthContext from '../../components/auth/AuthContext';
 

@@ -11,7 +11,7 @@ import {
   FormErrorMessage,
   Link,
   Box,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { Formik, Form } from 'formik';
 
 import signInSchema from './signInSchema';

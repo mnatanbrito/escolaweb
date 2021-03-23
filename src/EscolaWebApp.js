@@ -1,30 +1,32 @@
 import React from 'react';
-import { ThemeProvider, CSSReset } from '@chakra-ui/core';
-import { Provider } from 'react-redux';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { ChakraProvider } from '@chakra-ui/react';
 
 import customTheme from './theme';
-import store from './shared/store';
-import configureFirebaseApp from './shared/firebase';
+import firebaseApp from './shared/firebase';
 import GateKeeper from './components/auth/GateKeeper';
 import AuthContext from './components/auth/AuthContext';
 import BaseLayout from './shared/components/BaseLayout';
 import Router from './shared/components/Router';
 
-const firebaseApp = configureFirebaseApp();
+const queryClient = new QueryClient();
+
+const showReactQueryDevTools = false;
 
 export default function EscolaWebApp() {
   return (
-    <ThemeProvider theme={customTheme}>
-      <CSSReset />
-      <AuthContext.Provider value={firebaseApp.auth()}>
-        <Provider store={store}>
+    <ChakraProvider theme={customTheme}>
+      <QueryClientProvider client={queryClient}>
+        <AuthContext.Provider value={firebaseApp.auth()}>
           <GateKeeper>
             <BaseLayout>
               <Router />
             </BaseLayout>
           </GateKeeper>
-        </Provider>
-      </AuthContext.Provider>
-    </ThemeProvider>
+        </AuthContext.Provider>
+        {showReactQueryDevTools && <ReactQueryDevtools initialIsOpen />}
+      </QueryClientProvider>
+    </ChakraProvider>
   );
 }

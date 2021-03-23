@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Flex, Box, Stack, Heading } from '@chakra-ui/core';
+import { Flex, Box, Stack, Heading } from '@chakra-ui/react';
 
 import SignInForm from './SignInForm';
 import AuthContext from './AuthContext';
@@ -56,10 +56,10 @@ export default function SignIn() {
           justifyContent="center"
         >
           <Stack spacing={8}>
-            <Heading size="lg" color="white" textAlign="center">
+            <Heading boxSize="lg" color="white" textAlign="center">
               Escola Web
             </Heading>
-            <Heading size="sm" color="gray.400" textAlign="center">
+            <Heading boxSize="sm" color="gray.400" textAlign="center">
               O seu sistema de administração escolar
             </Heading>
           </Stack>

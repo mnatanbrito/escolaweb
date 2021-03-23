@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Stack, Text, Box, Spinner } from '@chakra-ui/core';
+import { Flex, Stack, Text, Box, Spinner } from '@chakra-ui/react';
 
 export default function SplashScreen() {
   return (

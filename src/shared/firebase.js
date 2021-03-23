@@ -1,7 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
-export default function configureFirebase() {
+let firebaseApp;
+
+if (!firebase.apps.length) {
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -12,5 +15,6 @@ export default function configureFirebase() {
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
   };
 
-  return firebase.initializeApp(firebaseConfig);
+  firebaseApp = firebase.initializeApp(firebaseConfig);
 }
+export default firebaseApp;

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { map, reduce } from 'lodash/collection';
+import { map, reduce } from 'lodash';
 
 import { FETCH_ALUNOS } from './actionTypes';
 import { listAlunos } from './service';
