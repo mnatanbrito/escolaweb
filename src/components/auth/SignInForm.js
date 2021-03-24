@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { Formik, Form } from 'formik';
 
-import signInSchema from './signInSchema';
+import { signInSchema } from './schemas';
 import featureFlags from '../../shared/featureFlags';
 
 const initialValues = {

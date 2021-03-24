@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Table,
   Thead,
@@ -8,36 +8,85 @@ import {
   Th,
   Stack,
   Button,
+  Alert,
+  AlertIcon,
+  Skeleton,
+  IconButton,
+  HStack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { FaHome } from 'react-icons/fa';
+import { FaHome, FaRedo, FaEdit } from 'react-icons/fa';
 import { map } from 'lodash';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import { getEscolas } from './service';
 import { cacheKey } from './constants';
+import EscolaForm from './EscolaForm';
 
 const MinhasEscolas = () => {
-  const { isLoading, error, data } = useQuery(cacheKey, getEscolas);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isFetching, isLoading, error, data, refetch } = useQuery(
+    cacheKey,
+    getEscolas
+  );
+  const [escolaSelecionada, setEscolaSelecionada] = useState();
 
-  if (error) return 'Ocorreu um erro ao exibir esse bloco: ' + error.message;
+  const onEditEscola = (idEscola) => {
+    setEscolaSelecionada(idEscola);
+    onOpen();
+  };
+
+  if (isLoading) {
+    return (
+      <Stack>
+        <Skeleton height="20px" />
+        <Skeleton height="20px" />
+        <Skeleton height="20px" />
+      </Stack>
+    );
+  }
+
+  if (error) {
+    return (
+      <Stack spacing={3}>
+        <Alert status="error">
+          <AlertIcon />
+          Não foi possível carregar a lista de escolas
+        </Alert>
+        <Button
+          rightIcon={<FaRedo />}
+          colorScheme="teal"
+          variant="link"
+          onClick={refetch}
+          disabled={isFetching}
+          size="sm"
+          isLoading={isFetching}
+        >
+          Carregar novamente
+        </Button>
+      </Stack>
+    );
+  }
 
   return (
-    <Table variant="simple">
-      <Thead>
-        <Tr>
-          <Th>Nome</Th>
-          <Th>Endereço</Th>
-          <Th>Opções</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {isLoading && (
+    <>
+      <Table variant="simple">
+        <Thead>
           <Tr>
-            <Td colSpan={3}>Carregando...</Td>
+            <Th>Nome</Th>
+            <Th>Endereço</Th>
+            <Th>Opções</Th>
           </Tr>
-        )}
-        {!isLoading && (
+        </Thead>
+        <Tbody>
           <>
             {map(data, ({ id, nome, endereco }) => (
               <Tr key={id}>
@@ -49,23 +98,45 @@ const MinhasEscolas = () => {
                 </Td>
                 <Td>
                   <Stack direction="row" spacing={4}>
-                    <Link to={`/escolas/${id}`} title={nome}>
-                      <Button
-                        leftIcon={<FaHome />}
+                    <HStack spacing={2}>
+                      <Link to={`/escolas/${id}`} title={nome}>
+                        <IconButton
+                          icon={<FaHome />}
+                          colorScheme="blue"
+                          variant="outline"
+                          title="Ir para a página da escola"
+                        />
+                      </Link>
+                      <IconButton
+                        icon={<FaEdit />}
                         colorScheme="blue"
                         variant="outline"
-                      >
-                        Dashboard
-                      </Button>
-                    </Link>
+                        onClick={() => onEditEscola(id)}
+                        title="Editar dados da escola"
+                      />
+                    </HStack>
                   </Stack>
                 </Td>
               </Tr>
             ))}
           </>
-        )}
-      </Tbody>
-    </Table>
+        </Tbody>
+      </Table>
+      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Editar dados</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <EscolaForm />
+            {JSON.stringify(escolaSelecionada)}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

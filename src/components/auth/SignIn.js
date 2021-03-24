@@ -60,7 +60,7 @@ export default function SignIn() {
               Escola Web
             </Heading>
             <Heading boxSize="sm" color="gray.400" textAlign="center">
-              O seu sistema de administração escolar
+              O seu sistema de gestão escolar.
             </Heading>
           </Stack>
         </Box>

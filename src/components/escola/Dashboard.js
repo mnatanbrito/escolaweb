@@ -12,9 +12,11 @@ import {
   Tab,
   Breadcrumb,
   BreadcrumbItem,
+  Button,
 } from '@chakra-ui/react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { FaArrowLeft } from 'react-icons/fa';
 
 import { cacheKey } from './constants';
 import { getEscola } from './service';
@@ -22,8 +24,8 @@ import Container from '../../shared/components/Container';
 
 export default function Dashboard() {
   const { id } = useParams();
-  const { isLoading, error, data } = useQuery([cacheKey, id], ({ queryKey }) =>
-    getEscola(queryKey[1])
+  const { isLoading, error, data } = useQuery([cacheKey, id], () =>
+    getEscola(id)
   );
 
   return (
@@ -33,12 +35,18 @@ export default function Dashboard() {
           {data && <Heading color="white">{data.nome}</Heading>}
         </Container>
       </Flex>
-      <Flex>
+      <Flex p={3}>
         <Container>
           <Breadcrumb>
             <BreadcrumbItem>
               <Link to="/dashboard" title="Voltar para a tela inicial">
-                Dashboard
+                <Button
+                  colorScheme="blue"
+                  variant="outline"
+                  leftIcon={<FaArrowLeft />}
+                >
+                  Voltar
+                </Button>
               </Link>
             </BreadcrumbItem>
           </Breadcrumb>
