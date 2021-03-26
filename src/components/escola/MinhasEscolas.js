@@ -44,6 +44,8 @@ const MinhasEscolas = () => {
     onOpen();
   };
 
+  const onUpdate = () => {};
+
   if (isLoading) {
     return (
       <Stack>
@@ -98,7 +100,7 @@ const MinhasEscolas = () => {
                 </Td>
                 <Td>
                   <Stack direction="row" spacing={4}>
-                    <HStack spacing={2}>
+                    <HStack spacing="15px">
                       <Link to={`/escolas/${id}`} title={nome}>
                         <IconButton
                           icon={<FaHome />}
@@ -128,11 +130,15 @@ const MinhasEscolas = () => {
           <ModalHeader>Editar dados</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <EscolaForm />
-            {JSON.stringify(escolaSelecionada)}
+            <EscolaForm id={escolaSelecionada} />
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <HStack spacing="5px">
+              <Button variant="ghost" onClick={onClose}>
+                Cancelar
+              </Button>
+              <Button onClick={onUpdate}>Atualizar</Button>
+            </HStack>
           </ModalFooter>
         </ModalContent>
       </Modal>

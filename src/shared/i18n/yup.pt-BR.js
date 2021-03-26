@@ -4,7 +4,7 @@ import printValue from './yupUtils';
 export default {
   mixed: {
     default: '${path} é inválido',
-    required: '${path} é um campo obrigatório',
+    required: 'Campo obrigatório',
     oneOf: '${path} deve ser um dos seguintes valores: ${values}',
     notOneOf: '${path} não pode ser um dos seguintes valores: ${values}',
     notType: ({ path, type, value, originalValue }) => {
