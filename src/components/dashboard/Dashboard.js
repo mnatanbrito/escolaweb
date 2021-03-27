@@ -2,7 +2,6 @@ import React from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
 
 import Container from '../../shared/components/Container';
-import LabeledPanel from '../../shared/components/LabeledPanel';
 import MinhasEscolas from '../escola/MinhasEscolas';
 
 export default function Dashboard() {
@@ -15,9 +14,7 @@ export default function Dashboard() {
       </Flex>
       <Flex flex={1} flexGrow={1} p={3}>
         <Container>
-          <LabeledPanel label="Minhas escolas">
-            <MinhasEscolas />
-          </LabeledPanel>
+          <MinhasEscolas />
         </Container>
       </Flex>
     </Flex>

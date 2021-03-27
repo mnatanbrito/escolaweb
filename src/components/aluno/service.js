@@ -1,20 +1,39 @@
-export const listAlunos = (skip, take) => {
-  return new Promise((resolve) => {
-    setTimeout(
-      () =>
-        resolve([
-          {
-            id: 1,
-            nome: 'Marcos Natan',
-            dataNascimento: new Date(),
-          },
-          {
-            id: 2,
-            nome: 'Flor de Maria',
-            dataNascimento: new Date(),
-          },
-        ]),
-      1500
-    );
-  });
+import { cacheKey } from './constants';
+import { cacheKey as escolaCacheKey } from '../escola/constants';
+import firebase from '../../shared/firebase';
+
+const db = firebase.firestore();
+
+export const getAlunos = (idEscola) => {
+  const escolas = db.collection(escolaCacheKey);
+
+  return escolas
+    .doc(idEscola)
+    .get()
+    .then((querySnapshot) => {
+      const data = {
+        id: querySnapshot.id,
+        ...querySnapshot.data(),
+      };
+
+      return data.alunos || [];
+    });
+};
+
+export const getAluno = (idEscola, idAluno) => {
+  return db
+    .collection(cacheKey)
+    .get()
+    .then((querySnapshot) => {
+      const results = [];
+
+      querySnapshot.forEach((doc) => {
+        results.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+
+      return results;
+    });
 };

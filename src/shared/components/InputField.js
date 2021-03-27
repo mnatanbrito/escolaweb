@@ -11,7 +11,7 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 
-export default function FormField({
+export default function InputField({
   name,
   label,
   type = 'text',

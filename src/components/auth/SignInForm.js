@@ -22,7 +22,7 @@ const initialValues = {
   senha: '',
 };
 
-export default function SignInForm({ onSubmit }) {
+export default function SignInForm({ isLoading, onSubmit }) {
   return (
     <Formik
       initialValues={initialValues}
@@ -86,6 +86,7 @@ export default function SignInForm({ onSubmit }) {
               variant="solid"
               isLoading={isSubmitting}
               type="submit"
+              disabled={isLoading}
             >
               Entrar
             </Button>

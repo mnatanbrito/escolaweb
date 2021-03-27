@@ -7,7 +7,6 @@ import customTheme from './theme';
 import firebaseApp from './shared/firebase';
 import GateKeeper from './components/auth/GateKeeper';
 import AuthContext from './components/auth/AuthContext';
-import BaseLayout from './shared/components/BaseLayout';
 import Router from './shared/components/Router';
 
 const queryClient = new QueryClient();
@@ -20,9 +19,7 @@ export default function EscolaWebApp() {
       <QueryClientProvider client={queryClient}>
         <AuthContext.Provider value={firebaseApp.auth()}>
           <GateKeeper>
-            <BaseLayout>
-              <Router />
-            </BaseLayout>
+            <Router />
           </GateKeeper>
         </AuthContext.Provider>
         {showReactQueryDevTools && <ReactQueryDevtools initialIsOpen />}

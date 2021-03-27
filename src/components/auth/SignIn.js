@@ -1,19 +1,16 @@
 import React, { useContext } from 'react';
-import { Flex, Box, Stack, Heading } from '@chakra-ui/react';
+import { Flex, Box, Heading, VStack } from '@chakra-ui/react';
+import { useMutation } from 'react-query';
 
 import SignInForm from './SignInForm';
 import AuthContext from './AuthContext';
 
 export default function SignIn() {
   const authContext = useContext(AuthContext);
+  const mutation = useMutation((values) =>
+    authContext.signInWithEmailAndPassword(values.email, values.senha)
+  );
 
-  const onSubmit = async ({ email, senha }) => {
-    try {
-      await authContext.signInWithEmailAndPassword(email, senha);
-    } catch (err) {
-      console.log(`ocorreu um erro ao realizar o sign in: ${err.message}`);
-    }
-  };
   return (
     <Flex
       flex="1"
@@ -48,21 +45,22 @@ export default function SignIn() {
         <Box
           display={{
             base: 'none',
-            md: 'flex',
+            lg: 'flex',
           }}
           flex="4"
           bg="primaryBlue"
           alignItems="center"
           justifyContent="center"
         >
-          <Stack spacing={8}>
-            <Heading boxSize="lg" color="white" textAlign="center">
+          <VStack spacing={3}>
+            <Heading color="white" textAlign="center">
               Escola Web
             </Heading>
-            <Heading boxSize="sm" color="gray.400" textAlign="center">
+
+            <Heading color="gray.400" textAlign="center" size="sm">
               O seu sistema de gestão escolar.
             </Heading>
-          </Stack>
+          </VStack>
         </Box>
         <Box
           display="flex"
@@ -70,7 +68,10 @@ export default function SignIn() {
           alignItems="center"
           justifyContent="center"
         >
-          <SignInForm onSubmit={onSubmit} />
+          <SignInForm
+            isLoading={mutation.isLoading}
+            onSubmit={(signInInfo) => mutation.mutate(signInInfo)}
+          />
         </Box>
       </Box>
     </Flex>

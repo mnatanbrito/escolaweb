@@ -3,15 +3,15 @@ import { cleanup, screen } from '@testing-library/react';
 
 import { renderFormContext } from '../utils/tests';
 
-import FormField from './FormField';
+import InputField from './InputField';
 import emailSchema from '../schemas/email';
 
-describe('FormField', () => {
+describe('InputField', () => {
   afterEach(cleanup);
 
   it('Deve renderizar sem erros', () => {
     renderFormContext(
-      () => <FormField name="email" title="email" />,
+      () => <InputField name="email" title="email" />,
       emailSchema
     );
 
@@ -20,7 +20,7 @@ describe('FormField', () => {
 
   it('Não deve possuir mensagem de erro quando o usuário não interagir com o campo', () => {
     renderFormContext(
-      () => <FormField name="email" title="email" />,
+      () => <InputField name="email" title="email" />,
       emailSchema
     );
 

@@ -21,6 +21,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { cacheKey } from './constants';
 import { getEscola } from './service';
 import Container from '../../shared/components/Container';
+import ListaAlunos from '../aluno/ListaAlunos';
 
 export default function Dashboard() {
   const { id } = useParams();
@@ -71,7 +72,7 @@ export default function Dashboard() {
                   </TabList>
                   <TabPanels>
                     <TabPanel>
-                      <p>Alunos!</p>
+                      <ListaAlunos idEscola={id} />
                     </TabPanel>
                     <TabPanel>
                       <p>Professores!</p>
