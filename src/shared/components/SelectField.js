@@ -17,7 +17,7 @@ export default function SelectField({
   onBlur,
   ...rest
 }) {
-  const [field, meta, _] = useField({
+  const [field, meta] = useField({
     name,
     onChange,
     onBlur,

@@ -15,19 +15,10 @@ import {
   IconButton,
 } from '@chakra-ui/react';
 import { map } from 'lodash';
-import { useQuery } from 'react-query';
 import { FaHome, FaRedo, FaEdit } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-import { cacheKey } from './constants';
-import { getAlunos } from './service';
-
-export default function ListaAlunos({ idEscola }) {
-  const { isLoading, isFetching, data, error, refetch } = useQuery(
-    [idEscola, cacheKey],
-    () => getAlunos(idEscola)
-  );
-
+export default function ListaAlunos({ isLoading, error, alunos }) {
   if (isLoading) {
     return (
       <Stack>
@@ -49,10 +40,9 @@ export default function ListaAlunos({ idEscola }) {
           rightIcon={<FaRedo />}
           colorScheme="teal"
           variant="link"
-          onClick={refetch}
-          disabled={isFetching}
+          disabled={isLoading}
           size="sm"
-          isLoading={isFetching}
+          isLoading={isLoading}
         >
           Carregar novamente
         </Button>
@@ -71,14 +61,14 @@ export default function ListaAlunos({ idEscola }) {
       </Thead>
       <Tbody>
         <>
-          {map(data, ({ id, nome, email }) => (
+          {map(alunos, ({ id, nome, email }) => (
             <Tr key={id}>
               <Td>{nome}</Td>
               <Td></Td>
               <Td>
                 <Stack direction="row" spacing={4}>
                   <HStack spacing="15px">
-                    <Link to={`/escolas/${idEscola}/alunos/${id}`} title={nome}>
+                    <Link to={`/alunos/${id}`} title={nome}>
                       <IconButton
                         icon={<FaHome />}
                         colorScheme="blue"

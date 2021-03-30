@@ -35,6 +35,8 @@ export default {
     trim: '${path} must be a trimmed string',
     lowercase: '${path} deve estar em minúscula',
     uppercase: '${path} deve estar em maiúscula',
+    dataInvalida: '${path} é uma data inválida',
+    dataFuturo: '${path} é uma data no futuro',
   },
   number: {
     min: '${path} deve ser maior ou igual a ${min}',

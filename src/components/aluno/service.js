@@ -1,22 +1,19 @@
 import { cacheKey } from './constants';
-import { cacheKey as escolaCacheKey } from '../escola/constants';
 import firebase from '../../shared/firebase';
 
 const db = firebase.firestore();
 
-export const getAlunos = (idEscola) => {
-  const escolas = db.collection(escolaCacheKey);
+export const getAlunos = (idsAlunos) => {
+  const alunos = db.collection(cacheKey);
 
-  return escolas
-    .doc(idEscola)
+  return alunos
+    .where('id', 'in', idsAlunos)
     .get()
     .then((querySnapshot) => {
-      const data = {
+      return {
         id: querySnapshot.id,
         ...querySnapshot.data(),
       };
-
-      return data.alunos || [];
     });
 };
 

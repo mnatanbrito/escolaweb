@@ -1,22 +1,17 @@
 import React from 'react';
-import { Flex, Heading } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 
-import Container from '../../shared/components/Container';
+import ContentLayout from '../../shared/components/ContentLayout';
 import MinhasEscolas from '../escola/MinhasEscolas';
+import MenuRapido from './MenuRapido';
 
 export default function Dashboard() {
   return (
-    <Flex flex={1} flexDirection="column">
-      <Flex bg="blue.600" height="180px" p={3}>
-        <Container>
-          <Heading color="white">Dashboard</Heading>
-        </Container>
-      </Flex>
-      <Flex flex={1} flexGrow={1} p={3}>
-        <Container>
-          <MinhasEscolas />
-        </Container>
-      </Flex>
-    </Flex>
+    <ContentLayout title="Dashboard">
+      <VStack justifyContent="flex-start" alignItems="flex-start" spacing={3}>
+        <MenuRapido />
+        <MinhasEscolas />
+      </VStack>
+    </ContentLayout>
   );
 }

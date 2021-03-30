@@ -23,14 +23,6 @@ export default function Header() {
   const userInfo = useContext(UserInfoContext);
   const mutation = useMutation(() => authContext.signOut());
 
-  const onSignOut = async () => {
-    try {
-      await authContext.signOut();
-    } catch (err) {
-      console.error(`não foi possível realizar o sign out: ${err.message}`);
-    }
-  };
-
   return (
     <Stack isInline justify="space-between" align="center" flex={1}>
       <Link to="/dashboard">

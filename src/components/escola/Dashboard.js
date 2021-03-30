@@ -19,21 +19,33 @@ import { useQuery } from 'react-query';
 import { FaArrowLeft } from 'react-icons/fa';
 
 import { cacheKey } from './constants';
+import { cacheKey as alunosCacheKey } from '../aluno/constants';
 import { getEscola } from './service';
 import Container from '../../shared/components/Container';
 import ListaAlunos from '../aluno/ListaAlunos';
+import { getAlunos } from '../aluno/service';
 
 export default function Dashboard() {
   const { id } = useParams();
-  const { isLoading, error, data } = useQuery([cacheKey, id], () =>
+  const { isLoading, error, data: escola } = useQuery([cacheKey, id], () =>
     getEscola(id)
+  );
+
+  const alunos = escola?.alunos || [];
+
+  const { error: errorAlunos, isIdle, data: alunosDaEscola } = useQuery(
+    [cacheKey, alunosCacheKey],
+    () => getAlunos(alunos),
+    {
+      enabled: !!alunos,
+    }
   );
 
   return (
     <Flex flex={1} flexDirection="column">
       <Flex bg="blue.600" height="180px" p={3}>
         <Container>
-          {data && <Heading color="white">{data.nome}</Heading>}
+          {escola && <Heading color="white">{escola.nome}</Heading>}
         </Container>
       </Flex>
       <Flex p={3}>
@@ -72,7 +84,11 @@ export default function Dashboard() {
                   </TabList>
                   <TabPanels>
                     <TabPanel>
-                      <ListaAlunos idEscola={id} />
+                      <ListaAlunos
+                        isLoading={isIdle}
+                        error={errorAlunos}
+                        alunos={alunosDaEscola}
+                      />
                     </TabPanel>
                     <TabPanel>
                       <p>Professores!</p>
