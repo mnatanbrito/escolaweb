@@ -1,6 +1,6 @@
-import * as yup from 'yup';
+import * as yup from 'yup'
 
-import estado from './estado';
+import estado from './estado'
 
 export default yup.object().shape({
   numero: yup.number().required().nullable(true),
@@ -8,4 +8,4 @@ export default yup.object().shape({
   bairro: yup.string().required(),
   cidade: yup.string().required(),
   estado: estado.required(),
-});
+})

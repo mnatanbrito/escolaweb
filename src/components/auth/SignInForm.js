@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Stack,
   InputGroup,
@@ -11,25 +11,25 @@ import {
   FormErrorMessage,
   Link,
   Box,
-} from '@chakra-ui/react';
-import { Formik, Form } from 'formik';
+} from '@chakra-ui/react'
+import {Formik, Form} from 'formik'
 
-import { signInSchema } from './schemas';
-import featureFlags from '../../shared/featureFlags';
+import {signInSchema} from './schemas'
+import featureFlags from '../../shared/featureFlags'
 
 const initialValues = {
   email: '',
   senha: '',
-};
+}
 
-export default function SignInForm({ isLoading, onSubmit }) {
+export default function SignInForm({isLoading, onSubmit}) {
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={signInSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting, errors, touched, values, setFieldValue }) => (
+      {({isSubmitting, errors, touched, values, setFieldValue}) => (
         <Form
           style={{
             display: 'flex',
@@ -110,5 +110,5 @@ export default function SignInForm({ isLoading, onSubmit }) {
         </Form>
       )}
     </Formik>
-  );
+  )
 }

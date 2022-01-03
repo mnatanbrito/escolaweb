@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box } from '@chakra-ui/layout';
+import React from 'react'
+import {Box} from '@chakra-ui/layout'
 
-export default function ShadowBox({ children, ...rest }) {
+export default function ShadowBox({children, ...rest}) {
   return (
     <Box
       flexDirection="column"
@@ -15,5 +15,5 @@ export default function ShadowBox({ children, ...rest }) {
     >
       {children}
     </Box>
-  );
+  )
 }

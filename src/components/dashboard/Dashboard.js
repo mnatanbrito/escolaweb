@@ -1,9 +1,9 @@
-import React from 'react';
-import { VStack } from '@chakra-ui/react';
+import React from 'react'
+import {VStack} from '@chakra-ui/react'
 
-import ContentLayout from '../../shared/components/ContentLayout';
-import MinhasEscolas from '../escola/MinhasEscolas';
-import MenuRapido from './MenuRapido';
+import ContentLayout from '../../shared/components/ContentLayout'
+import MinhasEscolas from '../escola/MinhasEscolas'
+import MenuRapido from './MenuRapido'
 
 export default function Dashboard() {
   return (
@@ -13,5 +13,5 @@ export default function Dashboard() {
         <MinhasEscolas />
       </VStack>
     </ContentLayout>
-  );
+  )
 }

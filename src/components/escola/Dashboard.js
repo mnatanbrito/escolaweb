@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Flex,
   Heading,
@@ -13,33 +13,35 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   Button,
-} from '@chakra-ui/react';
-import { useParams, Link } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import { FaArrowLeft } from 'react-icons/fa';
+} from '@chakra-ui/react'
+import {useParams, Link} from 'react-router-dom'
+import {useQuery} from 'react-query'
+import {FaArrowLeft} from 'react-icons/fa'
 
-import { cacheKey } from './constants';
-import { cacheKey as alunosCacheKey } from '../aluno/constants';
-import { getEscola } from './service';
-import Container from '../../shared/components/Container';
-import ListaAlunos from '../aluno/ListaAlunos';
-import { getAlunos } from '../aluno/service';
+import {cacheKey} from './constants'
+import {cacheKey as alunosCacheKey} from '../aluno/constants'
+import {getEscola} from './service'
+import Container from '../../shared/components/Container'
+import ListaAlunos from '../aluno/ListaAlunos'
+import {getAlunos} from '../aluno/service'
 
 export default function Dashboard() {
-  const { id } = useParams();
-  const { isLoading, error, data: escola } = useQuery([cacheKey, id], () =>
-    getEscola(id)
-  );
+  const {id} = useParams()
+  const {
+    isLoading,
+    error,
+    data: escola,
+  } = useQuery([cacheKey, id], () => getEscola(id))
 
-  const alunos = escola?.alunos || [];
+  const alunos = escola?.alunos || []
 
-  const { error: errorAlunos, isIdle, data: alunosDaEscola } = useQuery(
-    [cacheKey, alunosCacheKey],
-    () => getAlunos(alunos),
-    {
-      enabled: !!alunos,
-    }
-  );
+  const {
+    error: errorAlunos,
+    isIdle,
+    data: alunosDaEscola,
+  } = useQuery([cacheKey, alunosCacheKey], () => getAlunos(alunos), {
+    enabled: !!alunos,
+  })
 
   return (
     <Flex flex={1} flexDirection="column">
@@ -101,5 +103,5 @@ export default function Dashboard() {
         </Container>
       </Flex>
     </Flex>
-  );
+  )
 }

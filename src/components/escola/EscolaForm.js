@@ -1,12 +1,12 @@
-import React from 'react';
-import { map } from 'lodash';
-import { Box, HStack } from '@chakra-ui/react';
+import React from 'react'
+import {map} from 'lodash'
+import {Box, HStack} from '@chakra-ui/react'
 
-import SelectField from '../../shared/components/SelectField';
-import InputField from '../../shared/components/InputField';
-import estados from '../../shared/data/estados';
+import SelectField from '../../shared/components/SelectField'
+import InputField from '../../shared/components/InputField'
+import estados from '../../shared/data/estados'
 
-export default function EscolaForm({ handleChange }) {
+export default function EscolaForm({handleChange}) {
   return (
     <>
       <InputField
@@ -69,5 +69,5 @@ export default function EscolaForm({ handleChange }) {
         </Box>
       </HStack>
     </>
-  );
+  )
 }

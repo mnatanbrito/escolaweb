@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Table,
   Thead,
@@ -13,12 +13,12 @@ import {
   Skeleton,
   HStack,
   IconButton,
-} from '@chakra-ui/react';
-import { map } from 'lodash';
-import { FaHome, FaRedo, FaEdit } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+} from '@chakra-ui/react'
+import {map} from 'lodash'
+import {FaHome, FaRedo, FaEdit} from 'react-icons/fa'
+import {Link} from 'react-router-dom'
 
-export default function ListaAlunos({ isLoading, error, alunos }) {
+export default function ListaAlunos({isLoading, error, alunos}) {
   if (isLoading) {
     return (
       <Stack>
@@ -26,7 +26,7 @@ export default function ListaAlunos({ isLoading, error, alunos }) {
         <Skeleton height="20px" />
         <Skeleton height="20px" />
       </Stack>
-    );
+    )
   }
 
   if (error) {
@@ -47,7 +47,7 @@ export default function ListaAlunos({ isLoading, error, alunos }) {
           Carregar novamente
         </Button>
       </Stack>
-    );
+    )
   }
 
   return (
@@ -61,7 +61,7 @@ export default function ListaAlunos({ isLoading, error, alunos }) {
       </Thead>
       <Tbody>
         <>
-          {map(alunos, ({ id, nome, email }) => (
+          {map(alunos, ({id, nome, email}) => (
             <Tr key={id}>
               <Td>{nome}</Td>
               <Td></Td>
@@ -90,5 +90,5 @@ export default function ListaAlunos({ isLoading, error, alunos }) {
         </>
       </Tbody>
     </Table>
-  );
+  )
 }

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Flex, Heading } from '@chakra-ui/react';
+import React from 'react'
+import {Flex, Heading} from '@chakra-ui/react'
 
-import Container from './Container';
+import Container from './Container'
 
 export default function ContentLayout({
   children,
@@ -19,5 +19,5 @@ export default function ContentLayout({
         <Container>{children}</Container>
       </Flex>
     </Flex>
-  );
+  )
 }

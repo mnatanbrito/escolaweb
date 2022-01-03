@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
-import { Flex, Box, Heading, VStack } from '@chakra-ui/react';
-import { useMutation } from 'react-query';
+import React, {useContext} from 'react'
+import {Flex, Box, Heading, VStack} from '@chakra-ui/react'
+import {useMutation} from 'react-query'
 
-import SignInForm from './SignInForm';
-import AuthContext from './AuthContext';
+import SignInForm from './SignInForm'
+import AuthContext from './AuthContext'
 
 export default function SignIn() {
-  const authContext = useContext(AuthContext);
+  const authContext = useContext(AuthContext)
   const mutation = useMutation((values) =>
     authContext.signInWithEmailAndPassword(values.email, values.senha)
-  );
+  )
 
   return (
     <Flex
@@ -75,5 +75,5 @@ export default function SignIn() {
         </Box>
       </Box>
     </Flex>
-  );
+  )
 }

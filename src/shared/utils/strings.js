@@ -1,9 +1,9 @@
 export const formatDisplayName = (displayName) => {
   if (!displayName) {
-    return '';
+    return ''
   }
 
-  const parts = displayName.split(' ');
+  const parts = displayName.split(' ')
 
-  return `${parts[0]} ${parts.pop()}`;
-};
+  return `${parts[0]} ${parts.pop()}`
+}

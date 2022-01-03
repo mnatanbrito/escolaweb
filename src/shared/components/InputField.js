@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import { useField } from 'formik';
+import React from 'react'
+import {useField} from 'formik'
 import {
   FormControl,
   FormLabel,
@@ -9,7 +9,7 @@ import {
   Input,
   Icon,
   FormErrorMessage,
-} from '@chakra-ui/react';
+} from '@chakra-ui/react'
 
 export default function InputField({
   name,
@@ -28,7 +28,7 @@ export default function InputField({
     name,
     onChange,
     onBlur,
-  });
+  })
 
   return (
     <FormControl isRequired={isRequired} isInvalid={meta.touched && meta.error}>
@@ -58,5 +58,5 @@ export default function InputField({
         )}
       </InputGroup>
     </FormControl>
-  );
+  )
 }

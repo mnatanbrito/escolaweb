@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react'
 import {
   Table,
   Thead,
@@ -21,33 +21,33 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-} from '@chakra-ui/react';
-import { FaHome, FaRedo, FaEdit } from 'react-icons/fa';
-import { map, find } from 'lodash';
-import { Link } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import { Formik, Form } from 'formik';
+} from '@chakra-ui/react'
+import {FaHome, FaRedo, FaEdit} from 'react-icons/fa'
+import {map, find} from 'lodash'
+import {Link} from 'react-router-dom'
+import {useQuery} from 'react-query'
+import {Formik, Form} from 'formik'
 
-import { getEscolas } from './service';
-import { cacheKey } from './constants';
-import { cadastroEscola as schema } from './schemas';
-import EscolaForm from './EscolaForm';
-import Panel from '../../shared/components/Panel';
+import {getEscolas} from './service'
+import {cacheKey} from './constants'
+import {cadastroEscola as schema} from './schemas'
+import EscolaForm from './EscolaForm'
+import Panel from '../../shared/components/Panel'
 
 const MinhasEscolas = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isFetching, isLoading, error, data, refetch } = useQuery(
+  const {isOpen, onOpen, onClose} = useDisclosure()
+  const {isFetching, isLoading, error, data, refetch} = useQuery(
     cacheKey,
     getEscolas
-  );
-  const [escolaSelecionada, setEscolaSelecionada] = useState();
+  )
+  const [escolaSelecionada, setEscolaSelecionada] = useState()
 
   const onEditEscola = (idEscola) => {
-    setEscolaSelecionada(idEscola);
-    onOpen();
-  };
+    setEscolaSelecionada(idEscola)
+    onOpen()
+  }
 
-  const onUpdate = () => {};
+  const onUpdate = () => {}
 
   if (isLoading) {
     return (
@@ -56,7 +56,7 @@ const MinhasEscolas = () => {
         <Skeleton height="20px" />
         <Skeleton height="20px" />
       </Stack>
-    );
+    )
   }
 
   if (error) {
@@ -78,7 +78,7 @@ const MinhasEscolas = () => {
           Carregar novamente
         </Button>
       </Stack>
-    );
+    )
   }
 
   return (
@@ -94,7 +94,7 @@ const MinhasEscolas = () => {
           </Thead>
           <Tbody>
             <>
-              {map(data, ({ id, nome, endereco }) => (
+              {map(data, ({id, nome, endereco}) => (
                 <Tr key={id}>
                   <Td>{nome}</Td>
                   <Td>
@@ -140,10 +140,10 @@ const MinhasEscolas = () => {
               (escola) => escola.id === escolaSelecionada
             )}
             onSubmit={(values) => {
-              alert(values);
+              alert(values)
             }}
           >
-            {({ handleSubmit, handleChange, dirty }) => (
+            {({handleSubmit, handleChange, dirty}) => (
               <Form onSubmit={handleSubmit}>
                 <ModalHeader>Editar dados</ModalHeader>
                 <ModalCloseButton />
@@ -170,7 +170,7 @@ const MinhasEscolas = () => {
         </ModalContent>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default MinhasEscolas;
+export default MinhasEscolas

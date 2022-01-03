@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react'
 import {
   Stack,
   Menu,
@@ -9,19 +9,19 @@ import {
   Text,
   Avatar,
   HStack,
-} from '@chakra-ui/react';
-import { FaChevronDown } from 'react-icons/fa';
-import { useMutation } from 'react-query';
-import { Link } from 'react-router-dom';
+} from '@chakra-ui/react'
+import {FaChevronDown} from 'react-icons/fa'
+import {useMutation} from 'react-query'
+import {Link} from 'react-router-dom'
 
-import { formatDisplayName } from '../utils/strings';
-import AuthContext from '../../components/auth/AuthContext';
-import UserInfoContext from '../../components/auth/UserInfoContext';
+import {formatDisplayName} from '../utils/strings'
+import AuthContext from '../../components/auth/AuthContext'
+import UserInfoContext from '../../components/auth/UserInfoContext'
 
 export default function Header() {
-  const authContext = useContext(AuthContext);
-  const userInfo = useContext(UserInfoContext);
-  const mutation = useMutation(() => authContext.signOut());
+  const authContext = useContext(AuthContext)
+  const userInfo = useContext(UserInfoContext)
+  const mutation = useMutation(() => authContext.signOut())
 
   return (
     <Stack isInline justify="space-between" align="center" flex={1}>
@@ -55,5 +55,5 @@ export default function Header() {
         </Menu>
       </Stack>
     </Stack>
-  );
+  )
 }
