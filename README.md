@@ -1,4 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Escola Web - Sistema de Gerenciamento Escolar
+
+##  Requirements
+
+- Node: **>= v16.13.1**
+
+## Before running
+Add a **.env.development.local** file to the root of the project with the env vars present in the **./src/env.js** file.
 
 ## Available Scripts
 
