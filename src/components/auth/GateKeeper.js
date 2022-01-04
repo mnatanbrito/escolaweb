@@ -1,4 +1,5 @@
 import React, {useEffect, useContext, useState} from 'react'
+import {onAuthStateChanged} from 'firebase/auth'
 
 import SignIn from './SignIn'
 import AuthContext from './AuthContext'
@@ -23,7 +24,7 @@ export default function GateKeeper({children}) {
       }
     }
 
-    authContext.onAuthStateChanged(authStateChanged)
+    onAuthStateChanged(authContext, authStateChanged)
   }, [authContext])
 
   if (!hasCheckedAuth) {

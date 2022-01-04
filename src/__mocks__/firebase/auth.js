@@ -1,3 +1,2 @@
-export default function auth() {
-  return {}
-}
+export const getAuth = () => ({})
+export const onAuthStateChanged = () => ({})

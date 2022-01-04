@@ -1,10 +1,10 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
+import {getApps, initializeApp} from 'firebase/app'
 
 let firebaseApp
 
-if (!firebase.apps.length) {
+const registeredApps = getApps()
+
+if (!registeredApps.length) {
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -15,6 +15,6 @@ if (!firebase.apps.length) {
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
   }
 
-  firebaseApp = firebase.initializeApp(firebaseConfig)
+  firebaseApp = initializeApp(firebaseConfig)
 }
 export default firebaseApp

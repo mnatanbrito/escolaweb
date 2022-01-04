@@ -1,9 +1,12 @@
 import React, {Suspense} from 'react'
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 
 import BaseLayout from './BaseLayout'
 import SplashScreen from '../../components/auth/SplashScreen'
 
+/**
+ * Lazy loaded routes
+ */
 const Dashboard = React.lazy(() =>
   import('../../components/dashboard/Dashboard')
 )
@@ -18,14 +21,16 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Suspense fallback={<SplashScreen />}>
-        <Switch>
-          <BaseLayout>
-            <Route path="/escolas/:id" component={DashboardEscola} />
-            <Route path="/alunos/cadastro" component={CadastroAluno} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Redirect path="*" to="/dashboard" />
-          </BaseLayout>
-        </Switch>
+        <Routes>
+          <Route path="/" element={<BaseLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="/escolas/:id" element={<DashboardEscola />} />
+            <Route path="/alunos/cadastro" element={<CadastroAluno />} />
+
+            <Route path="*" element={<Navigate to="dashboard" />} />
+          </Route>
+        </Routes>
       </Suspense>
     </BrowserRouter>
   )

@@ -2,6 +2,7 @@ import React from 'react'
 import {QueryClientProvider, QueryClient} from 'react-query'
 import {ReactQueryDevtools} from 'react-query/devtools'
 import {ChakraProvider} from '@chakra-ui/react'
+import {getAuth} from 'firebase/auth'
 
 import customTheme from './theme'
 import firebaseApp from './shared/firebase'
@@ -17,7 +18,7 @@ export default function EscolaWebApp() {
   return (
     <ChakraProvider theme={customTheme}>
       <QueryClientProvider client={queryClient}>
-        <AuthContext.Provider value={firebaseApp.auth()}>
+        <AuthContext.Provider value={getAuth(firebaseApp)}>
           <GateKeeper>
             <Router />
           </GateKeeper>

@@ -1,10 +1,10 @@
 import React from 'react'
 import {HStack, VStack, Button, Heading} from '@chakra-ui/react'
 import {FaPlusCircle} from 'react-icons/fa'
-import {useHistory} from 'react-router'
+import {useNavigate} from 'react-router'
 
 export default function MenuRapido() {
-  const history = useHistory()
+  const history = useNavigate()
 
   const onClick = (routeName) => {
     history.push(routeName)

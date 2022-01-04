@@ -1,13 +1,12 @@
-export default {
-  apps: [],
-  initializeApp: function () {
+const mockApps = []
+
+export const getApps = () => mockApps
+
+export const initializeApp = () => ({
+  auth: function () {
     return {
-      auth: function () {
-        return {
-          onAuthStateChanged: function () {},
-        }
-      },
-      firestore: function () {},
+      onAuthStateChanged: function () {},
     }
   },
-}
+  firestore: function () {},
+})

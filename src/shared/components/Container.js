@@ -6,7 +6,7 @@ export default function Container({children}) {
     <Flex flex={1} justify="center" align="flex-start">
       <Flex
         flexGrow={1}
-        margin="0 auto"
+        // margin="0 auto"
         position="relative"
         width="auto"
         maxW={{
