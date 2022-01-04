@@ -1,27 +1,34 @@
-import { cacheKey } from './constants';
-import { unwrapData } from '../../shared/service/utils';
-import firebase from '../../shared/firebase';
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+} from 'firebase/firestore'
 
-const db = firebase.firestore();
+import {cacheKey} from './constants'
+import {unwrapData} from '../../shared/service/utils'
+import firebase from '../../shared/firebase'
 
-export const getEscolas = () => {
-  return db
-    .collection(cacheKey)
-    .get()
-    .then((querySnapshot) => {
-      const results = [];
+const db = getFirestore(firebase)
 
-      querySnapshot.forEach((doc) => {
-        results.push({
-          id: doc.id,
-          ...doc.data(),
-        });
-      });
+export const getEscolas = async () => {
+  const escolas = []
+  const escolasQuerySnapshot = await getDocs(collection(db, cacheKey))
 
-      return results;
-    });
-};
+  escolasQuerySnapshot.forEach((doc) => {
+    escolas.push({
+      id: doc.id,
+      ...doc.data(),
+    })
+  })
 
-export const getEscola = (id) => {
-  return db.collection(cacheKey).doc(id).get().then(unwrapData);
-};
+  return escolas
+}
+
+export const getEscola = async (id) => {
+  const docRef = doc(db, cacheKey, id)
+  const escolaQuerySnapshot = await getDoc(docRef)
+
+  return unwrapData(escolaQuerySnapshot)
+}

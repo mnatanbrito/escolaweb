@@ -1,5 +1,5 @@
-import { setLocale } from 'yup';
+import {setLocale} from 'yup'
 
-import yupPtBr from './yup.pt-BR';
+import yupPtBr from './yup.pt-BR'
 
-setLocale(yupPtBr);
+setLocale(yupPtBr)

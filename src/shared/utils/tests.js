@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-import { render } from '@testing-library/react';
-import { Formik } from 'formik';
+import {render} from '@testing-library/react'
+import {Formik} from 'formik'
 
 export const renderFormContext = (
   Component,
@@ -9,10 +9,10 @@ export const renderFormContext = (
   initialValues
 ) => {
   return render(Component, {
-    wrapper: ({ children }) => (
+    wrapper: ({children}) => (
       <Formik validationSchema={validationSchema} initialValues={initialValues}>
         {children}
       </Formik>
     ),
-  });
-};
+  })
+}

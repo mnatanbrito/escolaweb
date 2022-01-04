@@ -1,5 +1,7 @@
-import { isSignUpEnabled } from '../env';
+import {isSignUpEnabled} from '../env'
 
-export default {
+const featureFlags = {
   SIGN_UP_ENABLED: isSignUpEnabled(),
-};
+}
+
+export default featureFlags

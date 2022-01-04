@@ -1,12 +1,12 @@
-import React from 'react';
-import { Flex } from '@chakra-ui/react';
+import React from 'react'
+import {Flex} from '@chakra-ui/react'
 
-export default function Container({ children }) {
+export default function Container({children}) {
   return (
     <Flex flex={1} justify="center" align="flex-start">
       <Flex
         flexGrow={1}
-        margin="0 auto"
+        // margin="0 auto"
         position="relative"
         width="auto"
         maxW={{
@@ -19,5 +19,5 @@ export default function Container({ children }) {
         {children}
       </Flex>
     </Flex>
-  );
+  )
 }

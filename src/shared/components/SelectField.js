@@ -1,12 +1,12 @@
-import React from 'react';
-import { useField } from 'formik';
+import React from 'react'
+import {useField} from 'formik'
 import {
   Select,
   FormControl,
   FormErrorMessage,
   FormLabel,
-} from '@chakra-ui/react';
-import { map } from 'lodash';
+} from '@chakra-ui/react'
+import {map} from 'lodash'
 
 export default function SelectField({
   name,
@@ -21,12 +21,12 @@ export default function SelectField({
     name,
     onChange,
     onBlur,
-  });
+  })
   return (
     <FormControl isRequired={isRequired} isInvalid={meta.touched && meta.error}>
       {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
       <Select name={field.name} value={field.value} {...rest}>
-        {map(items, ({ label, value }) => (
+        {map(items, ({label, value}) => (
           <option key={value} value={value}>
             {label}
           </option>
@@ -39,5 +39,5 @@ export default function SelectField({
         </FormErrorMessage>
       )}
     </FormControl>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import {getApps, initializeApp} from 'firebase/app'
 
-let firebaseApp;
+let firebaseApp
 
-if (!firebase.apps.length) {
+const registeredApps = getApps()
+
+if (!registeredApps.length) {
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -13,8 +13,8 @@ if (!firebase.apps.length) {
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  };
+  }
 
-  firebaseApp = firebase.initializeApp(firebaseConfig);
+  firebaseApp = initializeApp(firebaseConfig)
 }
-export default firebaseApp;
+export default firebaseApp

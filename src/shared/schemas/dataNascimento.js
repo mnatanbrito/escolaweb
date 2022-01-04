@@ -1,7 +1,7 @@
-import * as yup from 'yup';
-import { isFuture, isValid } from 'date-fns';
+import * as yup from 'yup'
+import {isFuture, isValid} from 'date-fns'
 
-import { parseDate } from '../utils/dates';
+import {parseDate} from '../utils/dates'
 
 export default yup
   .string()
@@ -9,21 +9,21 @@ export default yup
     name: 'dataInvalida',
     test: (dataNascimento) => {
       if (!dataNascimento) {
-        return true;
+        return true
       }
 
-      return isValid(parseDate(dataNascimento));
+      return isValid(parseDate(dataNascimento))
     },
   })
   .test({
     name: 'dataFuturo',
     test: (dataNascimento) => {
       if (!dataNascimento) {
-        return true;
+        return true
       }
 
-      const parsedDate = parseDate(dataNascimento);
+      const parsedDate = parseDate(dataNascimento)
 
-      return !isFuture(parsedDate);
+      return !isFuture(parsedDate)
     },
-  });
+  })

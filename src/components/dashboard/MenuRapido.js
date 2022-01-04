@@ -1,14 +1,14 @@
-import React from 'react';
-import { HStack, VStack, Button, Heading } from '@chakra-ui/react';
-import { FaPlusCircle } from 'react-icons/fa';
-import { useHistory } from 'react-router';
+import React from 'react'
+import {HStack, VStack, Button, Heading} from '@chakra-ui/react'
+import {FaPlusCircle} from 'react-icons/fa'
+import {useNavigate} from 'react-router'
 
 export default function MenuRapido() {
-  const history = useHistory();
+  const history = useNavigate()
 
   const onClick = (routeName) => {
-    history.push(routeName);
-  };
+    history.push(routeName)
+  }
 
   return (
     <HStack direction="row" spacing={4} justify="flex-start" mb={5}>
@@ -28,5 +28,5 @@ export default function MenuRapido() {
         </Button>
       </VStack>
     </HStack>
-  );
+  )
 }

@@ -1,10 +1,11 @@
-import React from 'react';
-import { Flex } from '@chakra-ui/react';
+import React from 'react'
+import {Flex} from '@chakra-ui/react'
+import {Outlet} from 'react-router-dom'
 
-import Header from './Header';
-import Container from './Container';
+import Header from './Header'
+import Container from './Container'
 
-export default function BaseLayout({ children }) {
+export default function BaseLayout({children}) {
   return (
     <Flex
       height="100vh"
@@ -28,8 +29,9 @@ export default function BaseLayout({ children }) {
         </Container>
       </Flex>
       <Flex bg="gray.50" display="flex" flex={1}>
-        {children}
+        {/* {children} */}
+        <Outlet />
       </Flex>
     </Flex>
-  );
+  )
 }

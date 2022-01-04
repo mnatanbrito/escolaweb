@@ -1,6 +1,6 @@
-import * as yup from 'yup';
+import * as yup from 'yup'
 
-import estados from '../data/estados';
+import estados from '../data/estados'
 
 export default yup.object().shape({
   nome: yup
@@ -11,4 +11,4 @@ export default yup.object().shape({
     .string()
     .oneOf(estados.map((estado) => estado.sigla))
     .required(),
-});
+})

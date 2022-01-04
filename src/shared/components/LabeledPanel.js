@@ -1,5 +1,5 @@
-import React from 'react';
-import { Stack, Heading, Box } from '@chakra-ui/react';
+import React from 'react'
+import {Stack, Heading, Box} from '@chakra-ui/react'
 
 export default function LabeledPanel({
   label,
@@ -14,5 +14,5 @@ export default function LabeledPanel({
       </Heading>
       <Box>{children}</Box>
     </Stack>
-  );
+  )
 }

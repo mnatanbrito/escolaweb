@@ -1,26 +1,26 @@
 /* eslint-disable no-template-curly-in-string */
-import printValue from './yupUtils';
+import printValue from './yupUtils'
 
-export default {
+const i18n = {
   mixed: {
     default: '${path} é inválido',
     required: 'Campo obrigatório',
     oneOf: '${path} deve ser um dos seguintes valores: ${values}',
     notOneOf: '${path} não pode ser um dos seguintes valores: ${values}',
-    notType: ({ path, type, value, originalValue }) => {
-      let isCast = originalValue != null && originalValue !== value;
+    notType: ({path, type, value, originalValue}) => {
+      let isCast = originalValue != null && originalValue !== value
       let msg =
         `${path} must be a \`${type}\` type, ` +
         `but the final value was: \`${printValue(value, true)}\`` +
         (isCast
           ? ` (cast from the value \`${printValue(originalValue, true)}\`).`
-          : '.');
+          : '.')
 
       if (value === null) {
-        msg += `\n If "null" is intended as an empty value be sure to mark the schema as \`.nullable()\``;
+        msg += `\n If "null" is intended as an empty value be sure to mark the schema as \`.nullable()\``
       }
 
-      return msg;
+      return msg
     },
     defined: '${path} deve estar definido',
   },
@@ -60,4 +60,6 @@ export default {
     min: '${path} deve possuir pelo menos ${min} itens',
     max: '${path} deve possuir não mais que ${max} itens',
   },
-};
+}
+
+export default i18n
