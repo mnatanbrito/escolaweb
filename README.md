@@ -1,11 +1,12 @@
 # Escola Web - Sistema de Gerenciamento Escolar
 
-##  Requirements
+## Requirements
 
-- Node: **>= v16.13.1**
+- Node: **>= v14.18.2** as annotated in the **.nvmrc** file.
 
 ## Before running
-Add a **.env.development.local** file to the root of the project with the __following env vars__ present in the **./src/env.js** file:
+
+Add a **.env.development.local** file to the root of the project with the **following env vars** present in the **./src/env.js** file:
 
 - REACT_APP_FIREBASE_API_KEY
 - REACT_APP_FIREBASE_AUTH_DOMAIN

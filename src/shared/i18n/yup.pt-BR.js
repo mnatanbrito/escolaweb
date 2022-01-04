@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import printValue from './yupUtils'
 
-export default {
+const i18n = {
   mixed: {
     default: '${path} é inválido',
     required: 'Campo obrigatório',
@@ -61,3 +61,5 @@ export default {
     max: '${path} deve possuir não mais que ${max} itens',
   },
 }
+
+export default i18n

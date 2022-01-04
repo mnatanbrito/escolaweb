@@ -1,4 +1,4 @@
-export default [
+const estados = [
   {nome: 'Acre', sigla: 'AC'},
   {nome: 'Alagoas', sigla: 'AL'},
   {nome: 'Amapá', sigla: 'AP'},
@@ -27,3 +27,5 @@ export default [
   {nome: 'Sergipe', sigla: 'SE'},
   {nome: 'Tocantins', sigla: 'TO'},
 ]
+
+export default estados
