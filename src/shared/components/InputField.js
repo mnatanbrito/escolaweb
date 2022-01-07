@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import {useField} from 'formik'
+import {Field, useField} from 'formik'
 import {
   FormControl,
   FormLabel,
@@ -19,19 +19,30 @@ export default function InputField({
   maxLength,
   leftIcon,
   leftIconColor,
+  mask = null,
   isRequired = false,
   onChange = () => null,
   onBlur = () => null,
   ...rest
 }) {
-  const [field, meta, _] = useField({
+  const [field, meta, {setValue}] = useField({
     name,
     onChange,
     onBlur,
   })
 
+  const formattedValue = mask ? mask(field.value) : field.value
+
+  const changeCallback = mask
+    ? (evt) => {
+        const newValue = mask(evt.target.value)
+
+        setValue(newValue, true)
+      }
+    : field.onChange
+
   return (
-    <FormControl isRequired={isRequired} isInvalid={meta.touched && meta.error}>
+    <FormControl isInvalid={meta.touched && meta.error}>
       {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
       <InputGroup>
         {leftIcon && (
@@ -44,9 +55,9 @@ export default function InputField({
           name={field.name}
           type={type}
           placeholder={placeholder}
-          value={field.value}
+          value={formattedValue}
           maxLength={maxLength}
-          onChange={field.onChange}
+          onChange={changeCallback}
           onBlur={field.onBlur}
           {...rest}
         />

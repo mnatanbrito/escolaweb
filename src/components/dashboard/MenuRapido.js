@@ -4,10 +4,13 @@ import {FaPlusCircle} from 'react-icons/fa'
 import {useNavigate} from 'react-router'
 
 export default function MenuRapido() {
-  const history = useNavigate()
+  const navigation = useNavigate()
 
   const onClick = (routeName) => {
-    history.push(routeName)
+    navigation({
+      pathname: '/alunos/cadastro'
+      
+    })
   }
 
   return (
