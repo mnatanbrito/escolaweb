@@ -1,11 +1,16 @@
-import * as Yup from 'yup'
+import {object, string} from 'yup'
 
 import endereco from '../../shared/schemas/endereco'
-import dataNascimento from '../../shared/schemas/dataNascimento'
+import dataPassada from '../../shared/schemas/dataPassada'
+import dadosRg from '../../shared/schemas/dadosRg'
 
-export const cadastroAluno = Yup.object().shape({
-  nome: Yup.string().required().nullable(false),
-  dataNascimento: dataNascimento.required(),
-  naturalidade: Yup.string().required(),
+export const cadastroAluno = object().shape({
+  nome: string().required().nullable(false),
+  dataNascimento: dataPassada.nullable(false).required(),
+  nacionalidade: string().nullable(true),
+  naturalidade: string().nullable(true),
+
+  dadosRg,
+
   endereco: endereco.required(),
 })
