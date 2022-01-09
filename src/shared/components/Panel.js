@@ -1,13 +1,15 @@
 import React from 'react'
-import {Box, Heading} from '@chakra-ui/layout'
+import {VStack, Box, Heading} from '@chakra-ui/layout'
 
 export default function Panel({title, children, ...rest}) {
   return (
-    <Box p={5} borderWidth="1px" borderRadius="lg" shadow="md" {...rest}>
-      <Heading fontSize="md" color="gray.600">
+    <VStack mt="5" spacing="3" alignItems="flex-start">
+      <Heading fontSize="lg" color="black.400">
         {title}
       </Heading>
-      <Box mt={4}>{children}</Box>
-    </Box>
+      <Box p={5} borderWidth="1px" borderRadius="lg" bg="white" width="full">
+        {children}
+      </Box>
+    </VStack>
   )
 }

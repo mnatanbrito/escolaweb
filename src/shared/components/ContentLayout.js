@@ -1,23 +1,17 @@
 import React from 'react'
-import {Flex, Heading} from '@chakra-ui/react'
+import {Heading, Container, VStack, Box} from '@chakra-ui/react'
 
-import Container from './Container'
-
-export default function ContentLayout({
-  children,
-  title,
-  bgHeader = 'blue.600',
-}) {
+export default function ContentLayout({children, title, ...rest}) {
   return (
-    <Flex flex={1} flexDirection="column">
-      <Flex bg={bgHeader} height="180px" p={3}>
-        <Container>
-          <Heading color="white">{title}</Heading>
-        </Container>
-      </Flex>
-      <Flex flex={1} flexGrow={1} p={3}>
-        <Container>{children}</Container>
-      </Flex>
-    </Flex>
+    <VStack spacing={0}>
+      <Container maxW="container.xl" paddingLeft={0} paddingTop="5">
+        <Box mb="5">
+          <Heading size="lg" color="black.400">
+            {title}
+          </Heading>
+        </Box>
+        <Box {...rest}>{children}</Box>
+      </Container>
+    </VStack>
   )
 }
