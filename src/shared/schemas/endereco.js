@@ -1,11 +1,14 @@
-import * as yup from 'yup'
+import {string, object, number} from 'yup'
 
 import estado from './estado'
 
-export default yup.object().shape({
-  numero: yup.number().required().nullable(true),
-  rua: yup.string().required(),
-  bairro: yup.string().required(),
-  cidade: yup.string().required(),
+export default object().shape({
+  rua: string().required(),
+  bairro: string().required(),
+  numero: number().required().nullable(true),
+
+  complemento: string().nullable(true),
+  
+  cidade: string().required(),
   estado: estado.required(),
 })

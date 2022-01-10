@@ -12,6 +12,7 @@ describe('alunoSchema', () => {
         orgaoEmissor: 'SSP-MA',
         dataEmissao: '03/11/2021',
       },
+      cpf: '63678871054',
       endereco: {
         numero: 224,
         rua: '1 Old Mill Drive',

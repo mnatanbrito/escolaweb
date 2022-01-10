@@ -5,6 +5,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
 } from '@chakra-ui/react'
 import {map} from 'lodash'
 
@@ -12,7 +13,7 @@ export default function SelectField({
   name,
   label,
   items,
-  isRequired,
+  isRequired = false,
   onChange,
   onBlur,
   ...rest
@@ -24,7 +25,9 @@ export default function SelectField({
   })
   return (
     <FormControl isRequired={isRequired} isInvalid={meta.touched && meta.error}>
-      {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
+      <HStack spacing={0} justifyContent="flex-start" alignItems="flex-start">
+        {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
+      </HStack>
       <Select name={field.name} value={field.value} {...rest}>
         {map(items, ({label, value}) => (
           <option key={value} value={value}>

@@ -6,12 +6,6 @@ import {useNavigate} from 'react-router'
 export default function MenuRapido() {
   const navigation = useNavigate()
 
-  const onClick = (routeName) => {
-    navigation({
-      pathname: '/alunos/cadastro',
-    })
-  }
-
   return (
     <HStack
       direction="row"
@@ -25,9 +19,13 @@ export default function MenuRapido() {
       <Button
         colorScheme="blue"
         aria-label="Cadastrar aluno"
-        variant="outline"
+        variant="solid"
         leftIcon={<FaPlusCircle />}
-        onClick={() => onClick('/alunos/cadastro')}
+        onClick={() =>
+          navigation({
+            pathname: '/alunos/cadastro',
+          })
+        }
         title="Cadastrar um novo aluno"
       >
         Cadastrar aluno

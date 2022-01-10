@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import {Field, useField} from 'formik'
+import {useField} from 'formik'
 import {
   FormControl,
   FormLabel,
@@ -9,6 +9,7 @@ import {
   Input,
   Icon,
   FormErrorMessage,
+  HStack,
 } from '@chakra-ui/react'
 
 export default function InputField({
@@ -42,8 +43,10 @@ export default function InputField({
     : field.onChange
 
   return (
-    <FormControl isInvalid={meta.touched && meta.error}>
-      {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
+    <FormControl isRequired={isRequired} isInvalid={meta.touched && meta.error}>
+      <HStack spacing={0} justifyContent="flex-start" alignItems="flex-start">
+        {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
+      </HStack>
       <InputGroup>
         {leftIcon && (
           <InputLeftElement
@@ -61,13 +64,13 @@ export default function InputField({
           onBlur={field.onBlur}
           {...rest}
         />
-
-        {meta.error && (
-          <FormErrorMessage data-testid={`${name}-error`} textAlign="center">
-            {meta.error}
-          </FormErrorMessage>
-        )}
       </InputGroup>
+
+      {meta.error && (
+        <FormErrorMessage data-testid={`${name}-error`} textAlign="center">
+          {meta.error}
+        </FormErrorMessage>
+      )}
     </FormControl>
   )
 }

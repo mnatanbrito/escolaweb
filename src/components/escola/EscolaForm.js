@@ -17,7 +17,7 @@ export default function EscolaForm({handleChange}) {
         marginBottom="10px"
       />
 
-      <HStack spacing="15px">
+      <HStack spacing={3} mb="5" alignItems="flex-start">
         <Box w="80%">
           <InputField
             name="endereco.rua"
@@ -44,7 +44,7 @@ export default function EscolaForm({handleChange}) {
         onChange={handleChange}
         marginBottom="10px"
       />
-      <HStack spacing="15px">
+      <HStack spacing={3} mb="5" alignItems="flex-start">
         <Box w="80%">
           <InputField
             name="endereco.cidade"

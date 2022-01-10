@@ -4,12 +4,18 @@ import {
   getDocs,
   query,
   where,
+  addDoc,
 } from 'firebase/firestore'
 
 import {cacheKey} from './constants'
 import firebase from '../../shared/firebase'
 
 const db = getFirestore(firebase)
+
+export const addAluno = async (dadosAluno) => {
+  const docRef = await addDoc(collection(db, cacheKey), dadosAluno)
+  return docRef.id
+}
 
 export const getAlunos = async (idsAlunos) => {
   const alunos = []
