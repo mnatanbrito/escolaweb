@@ -6,7 +6,7 @@
 
 ## Before running
 
-Add a **.env.development.local** file to the root of the project with the **following env vars** present in the **./src/env.js** file:
+Add a **.env.development.local** file to the root of the project with the **following env vars** whose values are to be copied from **Firebase Console**:
 
 - REACT_APP_FIREBASE_API_KEY
 - REACT_APP_FIREBASE_AUTH_DOMAIN

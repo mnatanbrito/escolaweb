@@ -105,13 +105,14 @@ export default function AlunoForm({handleChange}) {
         </Box>
       </FormRow>
 
-      {/* row 4 */}
       <Box mt="50px"></Box>
 
+      {/* row 4 */}
       <FormRow mt="30px">
         <Text fontWeight="semibold">Endereço</Text>
       </FormRow>
 
+      {/* row 5 */}
       <FormRow>
         <Box flex={3}>
           <InputField
@@ -141,6 +142,7 @@ export default function AlunoForm({handleChange}) {
         </Box>
       </FormRow>
 
+      {/* row 6 */}
       <FormRow>
         <Box flex={3}>
           <InputField
@@ -172,6 +174,13 @@ export default function AlunoForm({handleChange}) {
             isRequired
           />
         </Box>
+      </FormRow>
+
+      <Box mt="50px"></Box>
+
+      {/* row 4 */}
+      <FormRow mt="30px">
+        <Text fontWeight="semibold">Pais e Responsáveis</Text>
       </FormRow>
     </Container>
   )
