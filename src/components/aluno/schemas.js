@@ -38,22 +38,7 @@ export const defaultNovoAluno = {
   nacionalidade: '',
   naturalidade: '',
 
-  // dadosRg: {
-  //   rg: '',
-  //   orgaoEmissor: '',
-  //   dataEmissao: '',
-  // },
-
   cpf: '',
 
-  // endereco: {
-  //   numero: '',
-  //   rua: '',
-  //   bairro: '',
-  //   cidade: '',
-  //   estado: {
-  //     nome: 'Maranhão',
-  //     sigla: 'MA',
-  //   },
-  // },
+  responsaveis: [],
 }

@@ -1,10 +1,39 @@
-import {HStack, Box, Container, Text} from '@chakra-ui/react'
+import {
+  HStack,
+  Box,
+  Container,
+  Text,
+  IconButton,
+  Table,
+  TableCaption,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from '@chakra-ui/react'
+import {useField, Formik} from 'formik'
+import {AddIcon, EditIcon} from '@chakra-ui/icons'
 import {map} from 'lodash'
+import {useState} from 'react'
 
 import {maskDateString} from '../../shared/utils/dates'
 import {maskCpf} from '../../shared/utils/strings'
+import schemaResponsavel, {
+  defaultValues,
+} from '../../shared/schemas/responsavel'
 import estados from '../../shared/data/estados'
 import InputField from '../../shared/components/InputField'
+import CheckboxField from '../../shared/components/CheckboxField'
+import DebugBox from '../../shared/components/DebugBox'
 import SelectField from '../../shared/components/SelectField'
 
 const FormRow = ({children, ...rest}) => {
@@ -15,7 +44,147 @@ const FormRow = ({children, ...rest}) => {
   )
 }
 
+const PaisResponsaveisTable = ({
+  onEdit = () => null,
+  items = [],
+  emptyTextMessage = '',
+}) => (
+  <Table variant="simple">
+    {items.length === 0 && <TableCaption>{emptyTextMessage}</TableCaption>}
+
+    <Thead>
+      <Tr>
+        <Th>Nome</Th>
+        <Th>Telefone contato</Th>
+        <Th>Profissão</Th>
+        <Th>Editar</Th>
+      </Tr>
+    </Thead>
+    <Tbody>
+      {map(items, (item, index) => (
+        <Tr key={item.id}>
+          <Td>{item.nome}</Td>
+          <Td>{item.dadosContato && item.dadosContato.numero}</Td>
+          <Td>{item.profissão}</Td>
+          <Td>
+            <IconButton
+              aria-label="Editar pai ou responsável"
+              icon={<EditIcon />}
+              onClick={() => onEdit(index)}
+            />
+          </Td>
+        </Tr>
+      ))}
+    </Tbody>
+  </Table>
+)
+
+const ModalPaiResponsavel = ({
+  onCreate = () => null,
+  onClose = () => null,
+  isOpen = false,
+}) => {
+  return (
+    <Modal onClose={onClose} isOpen={isOpen} isCentered>
+      <ModalOverlay />
+      <ModalContent>
+        <Formik
+          validationSchema={schemaResponsavel}
+          initialValues={defaultValues}
+        >
+          {({touched, values, errors, isValid, handleSubmit, onChange}) => (
+            <form noValidate onSubmit={handleSubmit}>
+              <ModalHeader>Dados do responsável</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <FormRow>
+                  <Box flex={8}>
+                    <InputField
+                      name="nome"
+                      label="Nome:"
+                      onChange={onChange}
+                      maxLength={100}
+                      isRequired
+                    />
+                  </Box>
+                </FormRow>
+
+                <FormRow>
+                  <Box flex={8}>
+                    <CheckboxField name="falecido" text="Falecido:" />
+                  </Box>
+                </FormRow>
+
+                <FormRow>
+                  <Box flex={6}>
+                    <InputField
+                      name="nacionalidade"
+                      label="Nacionalidade:"
+                      onChange={onChange}
+                      maxLength={100}
+                      isRequired
+                    />
+                  </Box>
+
+                  <Box flex={6}>
+                    <InputField
+                      name="naturalidade"
+                      label="Naturalidade:"
+                      onChange={onChange}
+                      maxLength={100}
+                      isRequired
+                    />
+                  </Box>
+                </FormRow>
+
+                <FormRow>
+                  <InputField
+                    name="profissao"
+                    label="Profissão"
+                    text="Profissão:"
+                    maxLength={100}
+                    isRequired
+                  />
+                </FormRow>
+
+                <FormRow>
+                  <Box>
+                    <DebugBox>{JSON.stringify(errors)}</DebugBox>
+                  </Box>
+                </FormRow>
+              </ModalBody>
+              <ModalFooter>
+                <FormRow justifyContent="flex-end" spacing="5px">
+                  <Button variant="ghost" onClick={onClose}>
+                    Cancelar
+                  </Button>
+                  <Button
+                    onClick={onCreate}
+                    type="button"
+                    disabled={!isValid || !touched}
+                  >
+                    Adicionar
+                  </Button>
+                </FormRow>
+              </ModalFooter>
+            </form>
+          )}
+        </Formik>
+      </ModalContent>
+    </Modal>
+  )
+}
+
 export default function AlunoForm({handleChange}) {
+  const [isModalPaisResponsaveisOpen, setIsModalPaisResponsaveisOpen] =
+    useState(false)
+  const [paiResponsavelSelecionado, setPaiResponsavelSelecionado] = useState(0)
+  const [responsaveisField] = useField({
+    name: 'responsaveis',
+  })
+  const adicionarPaiResponsavel = (dados) => {
+    alert(JSON.stringify(dados))
+  }
   return (
     <Container maxW="full">
       {/* row 1 */}
@@ -182,6 +351,40 @@ export default function AlunoForm({handleChange}) {
       <FormRow mt="30px">
         <Text fontWeight="semibold">Pais e Responsáveis</Text>
       </FormRow>
+
+      {/* row 5 */}
+      {responsaveisField.value.length === 0 && (
+        <FormRow justifyContent="flex-end">
+          <IconButton
+            aria-label="Cadastrar pai ou responsável"
+            colorScheme="blue"
+            icon={<AddIcon />}
+            onClick={() => {
+              const paisResponsaveis = responsaveisField.value || []
+              setPaiResponsavelSelecionado(
+                paisResponsaveis.length === 0
+                  ? paisResponsaveis.length
+                  : paisResponsaveis.length + 1
+              )
+              setIsModalPaisResponsaveisOpen(true)
+            }}
+          />
+        </FormRow>
+      )}
+
+      {/* row 6 */}
+      <PaisResponsaveisTable
+        items={responsaveisField.value}
+        emptyTextMessage="Nenhum pai ou responsável foi informado"
+      />
+
+      {/* row 7 */}
+      <ModalPaiResponsavel
+        isOpen={isModalPaisResponsaveisOpen}
+        currentIndex={paiResponsavelSelecionado}
+        onCreate={adicionarPaiResponsavel}
+        onClose={() => setIsModalPaisResponsaveisOpen(false)}
+      />
     </Container>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import {HStack, Button, Box} from '@chakra-ui/react'
+import {HStack, Button} from '@chakra-ui/react'
 import {Formik, Form} from 'formik'
 import {useNavigate} from 'react-router-dom'
 
@@ -53,7 +53,6 @@ export default function CadastroAluno() {
           <Form onSubmit={handleSubmit} noValidate>
             <Panel title="Dados do Aluno" mt="5">
               <AlunoForm handleChange={handleChange} />
-              <Box bg="red.400">{JSON.stringify(errors)}</Box>
             </Panel>
 
             <HStack spacing="5" mt="8" justifyContent="center">
