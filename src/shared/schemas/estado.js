@@ -1,14 +1,6 @@
-import * as yup from 'yup'
+import {string} from 'yup'
+import {map} from 'lodash/collection'
 
 import estados from '../data/estados'
 
-export default yup.object().shape({
-  nome: yup
-    .string()
-    .oneOf(estados.map((estado) => estado.nome))
-    .required(),
-  sigla: yup
-    .string()
-    .oneOf(estados.map((estado) => estado.sigla))
-    .required(),
-})
+export default string().oneOf(map(estados, (estado) => estado.sigla))

@@ -5,7 +5,7 @@ import estado from './estado'
 export default object().shape({
   rua: string().required(),
   bairro: string().required(),
-  numero: number().required().nullable(true),
+  numero: number().nullable(true),
 
   complemento: string().nullable(true),
   

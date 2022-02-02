@@ -20,20 +20,21 @@ import {
   ModalFooter,
   Button,
 } from '@chakra-ui/react'
-import {useField, Formik} from 'formik'
-import {AddIcon, EditIcon} from '@chakra-ui/icons'
+import {useField, Formik, FieldArray} from 'formik'
+import {AddIcon, DeleteIcon} from '@chakra-ui/icons'
 import {map} from 'lodash'
 import {useState} from 'react'
 
 import {maskDateString} from '../../shared/utils/dates'
 import {maskCpf} from '../../shared/utils/strings'
+import {withFirstItem} from '../../shared/utils/array'
 import schemaResponsavel, {
   defaultValues,
 } from '../../shared/schemas/responsavel'
 import estados from '../../shared/data/estados'
+import niveisEscolaridade from '../../shared/data/niveisEscolaridade'
 import InputField from '../../shared/components/InputField'
 import CheckboxField from '../../shared/components/CheckboxField'
-import DebugBox from '../../shared/components/DebugBox'
 import SelectField from '../../shared/components/SelectField'
 
 const FormRow = ({children, ...rest}) => {
@@ -45,7 +46,7 @@ const FormRow = ({children, ...rest}) => {
 }
 
 const PaisResponsaveisTable = ({
-  onEdit = () => null,
+  onRemove = () => null,
   items = [],
   emptyTextMessage = '',
 }) => (
@@ -57,7 +58,7 @@ const PaisResponsaveisTable = ({
         <Th>Nome</Th>
         <Th>Telefone contato</Th>
         <Th>Profissão</Th>
-        <Th>Editar</Th>
+        <Th>Remover</Th>
       </Tr>
     </Thead>
     <Tbody>
@@ -69,8 +70,8 @@ const PaisResponsaveisTable = ({
           <Td>
             <IconButton
               aria-label="Editar pai ou responsável"
-              icon={<EditIcon />}
-              onClick={() => onEdit(index)}
+              icon={<DeleteIcon />}
+              onClick={() => onRemove(index)}
             />
           </Td>
         </Tr>
@@ -80,7 +81,7 @@ const PaisResponsaveisTable = ({
 )
 
 const ModalPaiResponsavel = ({
-  onCreate = () => null,
+  onAdd = () => null,
   onClose = () => null,
   isOpen = false,
 }) => {
@@ -91,8 +92,18 @@ const ModalPaiResponsavel = ({
         <Formik
           validationSchema={schemaResponsavel}
           initialValues={defaultValues}
+          onSubmit={(values) => {
+            onAdd(values)
+          }}
         >
-          {({touched, values, errors, isValid, handleSubmit, onChange}) => (
+          {({
+            touched,
+            setFieldValue,
+            handleChange,
+            errors,
+            isValid,
+            handleSubmit,
+          }) => (
             <form noValidate onSubmit={handleSubmit}>
               <ModalHeader>Dados do responsável</ModalHeader>
               <ModalCloseButton />
@@ -102,7 +113,7 @@ const ModalPaiResponsavel = ({
                     <InputField
                       name="nome"
                       label="Nome:"
-                      onChange={onChange}
+                      onChange={handleChange}
                       maxLength={100}
                       isRequired
                     />
@@ -110,9 +121,7 @@ const ModalPaiResponsavel = ({
                 </FormRow>
 
                 <FormRow>
-                  <Box flex={8}>
-                    <CheckboxField name="falecido" text="Falecido:" />
-                  </Box>
+                  <CheckboxField isRequired name="falecido" text="Falecido:" />
                 </FormRow>
 
                 <FormRow>
@@ -120,7 +129,7 @@ const ModalPaiResponsavel = ({
                     <InputField
                       name="nacionalidade"
                       label="Nacionalidade:"
-                      onChange={onChange}
+                      onChange={handleChange}
                       maxLength={100}
                       isRequired
                     />
@@ -130,7 +139,7 @@ const ModalPaiResponsavel = ({
                     <InputField
                       name="naturalidade"
                       label="Naturalidade:"
-                      onChange={onChange}
+                      onChange={handleChange}
                       maxLength={100}
                       isRequired
                     />
@@ -140,17 +149,84 @@ const ModalPaiResponsavel = ({
                 <FormRow>
                   <InputField
                     name="profissao"
-                    label="Profissão"
-                    text="Profissão:"
+                    label="Profissão:"
+                    onChange={handleChange}
                     maxLength={100}
-                    isRequired
                   />
                 </FormRow>
 
                 <FormRow>
-                  <Box>
-                    <DebugBox>{JSON.stringify(errors)}</DebugBox>
+                  <Box flex={3}>
+                    <InputField
+                      name="enderecoTrabalho.rua"
+                      label="Rua:"
+                      onChange={handleChange}
+                      maxLength={100}
+                    />
                   </Box>
+
+                  <Box flex={3}>
+                    <InputField
+                      name="enderecoTrabalho.bairro"
+                      label="Bairro:"
+                      onChange={handleChange}
+                      maxLength={100}
+                    />
+                  </Box>
+                </FormRow>
+
+                <FormRow>
+                  <Box flex={3}>
+                    <InputField
+                      name="enderecoTrabalho.numero"
+                      label="Número:"
+                      onChange={handleChange}
+                      maxLength={6}
+                    />
+                  </Box>
+
+                  <Box flex={9}>
+                    <InputField
+                      name="enderecoTrabalho.complemento"
+                      label="Complemento:"
+                      onChange={handleChange}
+                      maxLength={100}
+                    />
+                  </Box>
+                </FormRow>
+
+                {/* row 6 */}
+                <FormRow>
+                  <Box>
+                    <InputField
+                      name="enderecoTrabalho.cidade"
+                      label="Cidade:"
+                      onChange={handleChange}
+                      maxLength={100}
+                    />
+                  </Box>
+
+                  <Box>
+                    <SelectField
+                      name="enderecoTrabalho.estado"
+                      label="Estado:"
+                      items={withFirstItem(
+                        map(estados, (estado) => ({
+                          label: estado.nome,
+                          value: estado.sigla,
+                        }))
+                      )}
+                      isRequired
+                    />
+                  </Box>
+                </FormRow>
+
+                <FormRow>
+                  <SelectField
+                    name="nivelEscolaridade"
+                    items={withFirstItem(niveisEscolaridade)}
+                    label="Escolaridade:"
+                  />
                 </FormRow>
               </ModalBody>
               <ModalFooter>
@@ -158,11 +234,7 @@ const ModalPaiResponsavel = ({
                   <Button variant="ghost" onClick={onClose}>
                     Cancelar
                   </Button>
-                  <Button
-                    onClick={onCreate}
-                    type="button"
-                    disabled={!isValid || !touched}
-                  >
+                  <Button type="submit" disabled={!isValid || !touched}>
                     Adicionar
                   </Button>
                 </FormRow>
@@ -182,9 +254,6 @@ export default function AlunoForm({handleChange}) {
   const [responsaveisField] = useField({
     name: 'responsaveis',
   })
-  const adicionarPaiResponsavel = (dados) => {
-    alert(JSON.stringify(dados))
-  }
   return (
     <Container maxW="full">
       {/* row 1 */}
@@ -318,7 +387,7 @@ export default function AlunoForm({handleChange}) {
             name="endereco.complemento"
             label="Complemento:"
             onChange={handleChange}
-            maxLength={6}
+            maxLength={100}
           />
         </Box>
 
@@ -327,7 +396,7 @@ export default function AlunoForm({handleChange}) {
             name="endereco.cidade"
             label="Cidade:"
             onChange={handleChange}
-            maxLength={6}
+            maxLength={100}
           />
         </Box>
 
@@ -347,13 +416,13 @@ export default function AlunoForm({handleChange}) {
 
       <Box mt="50px"></Box>
 
-      {/* row 4 */}
+      {/* row 7 */}
       <FormRow mt="30px">
         <Text fontWeight="semibold">Pais e Responsáveis</Text>
       </FormRow>
 
-      {/* row 5 */}
-      {responsaveisField.value.length === 0 && (
+      {/* row 8 */}
+      {responsaveisField.value.length < 3 && (
         <FormRow justifyContent="flex-end">
           <IconButton
             aria-label="Cadastrar pai ou responsável"
@@ -372,18 +441,30 @@ export default function AlunoForm({handleChange}) {
         </FormRow>
       )}
 
-      {/* row 6 */}
-      <PaisResponsaveisTable
-        items={responsaveisField.value}
-        emptyTextMessage="Nenhum pai ou responsável foi informado"
-      />
-
-      {/* row 7 */}
-      <ModalPaiResponsavel
-        isOpen={isModalPaisResponsaveisOpen}
-        currentIndex={paiResponsavelSelecionado}
-        onCreate={adicionarPaiResponsavel}
-        onClose={() => setIsModalPaisResponsaveisOpen(false)}
+      {/* row 10 */}
+      <FieldArray
+        name="responsaveis"
+        render={(arrayHelpers) => (
+          <>
+            {/* row 9 */}
+            <PaisResponsaveisTable
+              items={responsaveisField.value}
+              onRemove={(indexToRemove) => {
+                arrayHelpers.remove(indexToRemove)
+              }}
+              emptyTextMessage="Nenhum pai ou responsável foi informado"
+            />
+            <ModalPaiResponsavel
+              isOpen={isModalPaisResponsaveisOpen}
+              currentIndex={paiResponsavelSelecionado}
+              onAdd={(responsavel) => {
+                arrayHelpers.push(responsavel)
+                setIsModalPaisResponsaveisOpen(false)
+              }}
+              onClose={() => setIsModalPaisResponsaveisOpen(false)}
+            />
+          </>
+        )}
       />
     </Container>
   )

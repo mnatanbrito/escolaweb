@@ -55,7 +55,7 @@ export default function CadastroAluno() {
               <AlunoForm handleChange={handleChange} />
             </Panel>
 
-            <HStack spacing="5" mt="8" justifyContent="center">
+            <HStack spacing="5" mt="8" mb={7} justifyContent="center">
               <Button
                 variant="ghost"
                 colorScheme="blue"

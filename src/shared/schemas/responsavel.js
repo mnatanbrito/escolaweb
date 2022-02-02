@@ -2,7 +2,6 @@ import {object, string, bool} from 'yup'
 
 import dadosRg from './dadosRg'
 import nivelEscolaridade from './nivelEscolaridade'
-import niveisEscolaridade from '../data/niveisEscolaridade'
 import endereco from './endereco'
 import dadosContato from './dadosContato'
 
@@ -13,22 +12,27 @@ export default object().shape({
   nacionalidade: string().nullable(true),
   naturalidade: string().nullable(true),
 
-  dadosRg: dadosRg.nullable(true),
+  dadosRg: dadosRg.notRequired().nullable(true),
 
-  nivelEscolaridade,
-  profissao: string().required(),
+  nivelEscolaridade: nivelEscolaridade.nullable(true),
+  profissao: string().nullable(true),
 
   enderecoTrabalho: endereco.nullable(true),
-  dadosContato: dadosContato.nullable(true),
+  dadosContato: dadosContato.required(),
 })
 
 export const defaultValues = {
   nome: '',
   falecido: false,
 
-  nacionalidade: '',
-  naturalidade: '',
+  nacionalidade: null,
+  naturalidade: null,
 
-  nivelEscolaridade: niveisEscolaridade[2],
-  profissao: '',
+  dadosRg: null,
+
+  nivelEscolaridade: null,
+  profissao: null,
+
+  enderecoTrabalho: null,
+  dadosContato: '',
 }

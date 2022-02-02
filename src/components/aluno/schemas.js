@@ -40,5 +40,6 @@ export const defaultNovoAluno = {
 
   cpf: '',
 
+  pais: [],
   responsaveis: [],
 }

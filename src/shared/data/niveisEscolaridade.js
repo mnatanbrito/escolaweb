@@ -1,31 +1,31 @@
 const niveis = [
   {
-    codigo: 1,
-    nome: 'Sem registro',
+    value: 1,
+    label: 'Sem registro',
   },
   {
-    codigo: 2,
-    nome: 'Ensino Fundamental',
+    value: 2,
+    label: 'Ensino Fundamental',
   },
   {
-    codigo: 3,
-    nome: 'Ensino Médio',
+    value: 3,
+    label: 'Ensino Médio',
   },
   {
-    codigo: 4,
-    nome: 'Bacharelado / Licenciatura',
+    value: 4,
+    label: 'Bacharelado / Licenciatura',
   },
   {
-    codigo: 4,
-    nome: 'Mestrado',
+    value: 5,
+    label: 'Mestrado',
   },
   {
-    codigo: 5,
-    nome: 'Doutorado',
+    value: 6,
+    label: 'Doutorado',
   },
   {
-    codigo: 6,
-    nome: 'Pós-Doutorado',
+    value: 7,
+    label: 'Pós-Doutorado',
   },
 ]
 

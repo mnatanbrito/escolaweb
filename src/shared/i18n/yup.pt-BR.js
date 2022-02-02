@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import printValue from './yupUtils'
+// import printValue from './yupUtils'
 
 const i18n = {
   mixed: {
@@ -8,19 +8,20 @@ const i18n = {
     oneOf: '${path} deve ser um dos seguintes valores: ${values}',
     notOneOf: '${path} não pode ser um dos seguintes valores: ${values}',
     notType: ({path, type, value, originalValue}) => {
-      let isCast = originalValue != null && originalValue !== value
-      let msg =
-        `${path} must be a \`${type}\` type, ` +
-        `but the final value was: \`${printValue(value, true)}\`` +
-        (isCast
-          ? ` (cast from the value \`${printValue(originalValue, true)}\`).`
-          : '.')
+      // let isCast = originalValue != null && originalValue !== value
+      // let msg =
+      //   `${path} must be a \`${type}\` type, ` +
+      //   `but the final value was: \`${printValue(value, true)}\`` +
+      //   (isCast
+      //     ? ` (cast from the value \`${printValue(originalValue, true)}\`).`
+      //     : '.')
 
-      if (value === null) {
-        msg += `\n If "null" is intended as an empty value be sure to mark the schema as \`.nullable()\``
-      }
+      // if (value === null) {
+      //   msg += `\n If "null" is intended as an empty value be sure to mark the schema as \`.nullable()\``
+      // }
 
-      return msg
+      // return msg
+      return 'Valor inválido'
     },
     defined: '${path} deve estar definido',
   },

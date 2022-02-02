@@ -32,7 +32,7 @@ export default function InputField({
     onBlur,
   })
 
-  const formattedValue = mask ? mask(field.value) : field.value
+  const formattedValue = (mask ? mask(field.value) : field.value) || ''
 
   const changeCallback = mask
     ? (evt) => {
