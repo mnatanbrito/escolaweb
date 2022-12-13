@@ -4,13 +4,6 @@ import {
   Container,
   Text,
   IconButton,
-  Table,
-  TableCaption,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -21,7 +14,7 @@ import {
   Button,
 } from '@chakra-ui/react'
 import {useField, Formik, FieldArray} from 'formik'
-import {AddIcon, DeleteIcon} from '@chakra-ui/icons'
+import {AddIcon} from '@chakra-ui/icons'
 import {map} from 'lodash'
 import {useState} from 'react'
 
@@ -36,6 +29,9 @@ import niveisEscolaridade from '../../shared/data/niveisEscolaridade'
 import InputField from '../../shared/components/InputField'
 import CheckboxField from '../../shared/components/CheckboxField'
 import SelectField from '../../shared/components/SelectField'
+import PaisResponsaveisTable from './PaisResponsaveisTable'
+import RadioField from '../../shared/components/RadioField'
+import {corPeleOptions} from '../../shared/data/corPele'
 
 const FormRow = ({children, ...rest}) => {
   return (
@@ -44,41 +40,6 @@ const FormRow = ({children, ...rest}) => {
     </HStack>
   )
 }
-
-const PaisResponsaveisTable = ({
-  onRemove = () => null,
-  items = [],
-  emptyTextMessage = '',
-}) => (
-  <Table variant="simple">
-    {items.length === 0 && <TableCaption>{emptyTextMessage}</TableCaption>}
-
-    <Thead>
-      <Tr>
-        <Th>Nome</Th>
-        <Th>Telefone contato</Th>
-        <Th>Profissão</Th>
-        <Th>Remover</Th>
-      </Tr>
-    </Thead>
-    <Tbody>
-      {map(items, (item, index) => (
-        <Tr key={item.id}>
-          <Td>{item.nome}</Td>
-          <Td>{item.dadosContato && item.dadosContato.numero}</Td>
-          <Td>{item.profissão}</Td>
-          <Td>
-            <IconButton
-              aria-label="Editar pai ou responsável"
-              icon={<DeleteIcon />}
-              onClick={() => onRemove(index)}
-            />
-          </Td>
-        </Tr>
-      ))}
-    </Tbody>
-  </Table>
-)
 
 const ModalPaiResponsavel = ({
   onAdd = () => null,
@@ -339,6 +300,62 @@ export default function AlunoForm({handleChange}) {
             maxLength={14}
             mask={maskCpf}
             isRequired
+          />
+        </Box>
+      </FormRow>
+
+      <FormRow>
+        <Box flex={3}>
+          <InputField
+            name="email"
+            label="Email:"
+            onChange={handleChange}
+            maxLength={100}
+          />
+        </Box>
+      </FormRow>
+
+      <FormRow>
+        <Box flex={4}>
+          <RadioField
+            name="corPele"
+            label="Cor da pele"
+            options={corPeleOptions}
+          />
+        </Box>
+
+        <Box flex={3}>
+          <RadioField
+            name="bolsaFamilia"
+            label="Bolsa Família"
+            options={[
+              {label: 'Sim', value: 'true'},
+              {label: 'Não', value: 'false'},
+            ]}
+          />
+        </Box>
+
+        <Box flex={3}>
+          <RadioField
+            name="usaTransportePublico"
+            label="Usa Transporte Público"
+            options={[
+              {label: 'Sim', value: 'true'},
+              {label: 'Não', value: 'false'},
+            ]}
+          />
+        </Box>
+      </FormRow>
+
+      <FormRow>
+        <Box>
+          <RadioField
+            name="necessidadesEducacionaisEspeciais"
+            label="Necessidades Educacionais Especiais"
+            options={[
+              {label: 'Sim', value: 'true'},
+              {label: 'Não', value: 'false'},
+            ]}
           />
         </Box>
       </FormRow>

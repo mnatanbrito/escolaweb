@@ -1,4 +1,4 @@
-import {object, string, array} from 'yup'
+import {object, string, array, boolean} from 'yup'
 
 import dataPassada from '../../shared/schemas/dataPassada'
 import dadosRg from '../../shared/schemas/dadosRg'
@@ -6,6 +6,8 @@ import cpf from '../../shared/schemas/cpf'
 import endereco from '../../shared/schemas/endereco'
 import pai from '../../shared/schemas/pai'
 import responsavel from '../../shared/schemas/responsavel'
+import corPele from '../../shared/data/corPele'
+import email from '../../shared/schemas/email'
 
 export const cadastroAluno = object().shape({
   /* dados do aluno */
@@ -18,6 +20,13 @@ export const cadastroAluno = object().shape({
   dadosRg: dadosRg.nullable(true),
 
   cpf: cpf.nullable(false).required(),
+
+  email: email.notRequired(),
+
+  corPele: string().oneOf(corPele).notRequired(),
+  bolsaFamilia: boolean().notRequired(),
+  usaTransportePublico: boolean().notRequired(),
+  necessidadesEducacionaisEspeciais: boolean().notRequired(),
 
   endereco: endereco.nullable(true),
 
@@ -34,12 +43,9 @@ export const cadastroAluno = object().shape({
 export const defaultNovoAluno = {
   nome: '',
   dataNascimento: '',
-
   nacionalidade: '',
   naturalidade: '',
-
   cpf: '',
-
   pais: [],
   responsaveis: [],
 }
