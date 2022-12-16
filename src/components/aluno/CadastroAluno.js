@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom'
 
 import {cadastroAluno, defaultNovoAluno} from './schemas'
 import {addAluno} from './service'
+import {PaisFormSection, ResponsavelForm} from './paisResponsaveis'
 import useNotification from '../../shared/hooks/useNotification'
 import ContentLayout from '../../shared/components/ContentLayout'
 import Panel from '../../shared/components/Panel'
@@ -45,15 +46,24 @@ export default function CadastroAluno() {
         {({
           handleSubmit,
           handleChange,
+          handleBlur,
           dirty,
           isValid,
           isSubmitting,
           errors,
         }) => (
-          <Form onSubmit={handleSubmit} noValidate>
+          <Form>
             <Panel title="Dados do Aluno" mt="5">
-              <AlunoForm handleChange={handleChange} />
+              <AlunoForm handleChange={handleChange} handleBlur={handleBlur} />
             </Panel>
+
+            {/* <Panel title="Dados sobre os pais">
+              <PaisFormSection />
+            </Panel>
+
+            <Panel title="Dados sobre o responsável">
+              <ResponsavelForm />
+            </Panel> */}
 
             <HStack spacing="5" mt="8" mb={7} justifyContent="center">
               <Button

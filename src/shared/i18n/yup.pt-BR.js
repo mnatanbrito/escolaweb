@@ -38,6 +38,7 @@ const i18n = {
     uppercase: '${path} deve estar em maiúscula',
     dataInvalida: '${path} é uma data inválida',
     dataFuturo: '${path} é uma data no futuro',
+    dataNascimento: 'Data de nascimento inválida'
   },
   number: {
     min: '${path} deve ser maior ou igual a ${min}',

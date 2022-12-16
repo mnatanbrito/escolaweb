@@ -1,6 +1,7 @@
 import {object, string, array, boolean} from 'yup'
 
-import dataPassada from '../../shared/schemas/dataPassada'
+import {requiredString, nonRequiredString} from '../../shared/schemas/strings'
+import dataNascimento from '../../shared/schemas/dataNascimento'
 import dadosRg from '../../shared/schemas/dadosRg'
 import cpf from '../../shared/schemas/cpf'
 import endereco from '../../shared/schemas/endereco'
@@ -11,41 +12,44 @@ import email from '../../shared/schemas/email'
 
 export const cadastroAluno = object().shape({
   /* dados do aluno */
-  nome: string().nullable(false),
-  dataNascimento: dataPassada.nullable(false),
-
-  nacionalidade: string().nullable(true),
-  naturalidade: string().nullable(true),
-
+  nome: requiredString,
+  dataNascimento: dataNascimento.required().nullable(true),
+  nacionalidade: nonRequiredString,
+  naturalidade: nonRequiredString,
   dadosRg: dadosRg.nullable(true),
-
   cpf: cpf.nullable(false).required(),
-
   email: email.notRequired(),
-
-  corPele: string().oneOf(corPele).notRequired(),
-  bolsaFamilia: boolean().notRequired(),
-  usaTransportePublico: boolean().notRequired(),
-  necessidadesEducacionaisEspeciais: boolean().notRequired(),
-
-  endereco: endereco.nullable(true),
+  corPele: string()
+    .oneOf(corPele.map((cor) => cor.toLowerCase()))
+    .notRequired()
+    .nullable(true),
+  bolsaFamilia: boolean().notRequired().nullable(true),
+  usaTransportePublico: boolean().notRequired().nullable(true),
+  necessidadesEducacionaisEspeciais: boolean().notRequired().nullable(true),
+  endereco: endereco.required().nullable(true),
 
   /* pais e responsaveis */
-  pais: array(pai),
-
-  responsaveis: array(responsavel).when('pais', {
-    is: (pais) => (pais || []).length === 0,
-    then: (schema) => schema.required().min(1),
-    otherwise: (schema) => schema.notRequired().nullable(true),
-  }),
+  // pais: array(pai),
+  // responsavel: responsavel.when('pais', {
+  //   is: (pais) => (pais || []).length === 0,
+  //   then: (schema) => schema.required(),
+  //   otherwise: (schema) => schema.notRequired().nullable(true),
+  // }),
 })
 
 export const defaultNovoAluno = {
-  nome: '',
-  dataNascimento: '',
-  nacionalidade: '',
-  naturalidade: '',
+  nome: null,
+  dataNascimento: null,
+  nacionalidade: null,
+  naturalidade: null,
+  dadosRg,
   cpf: '',
+  email: '',
+  corPele: null,
+  bolsaFamilia: null,
+  usaTransportePublico: null,
+  necessidadesEducacionaisEspeciais: null,
+  endereco: null,
   pais: [],
-  responsaveis: [],
+  responsavel: null,
 }

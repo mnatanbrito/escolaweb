@@ -1,5 +1,4 @@
 import {
-  HStack,
   Box,
   Container,
   Text,
@@ -13,7 +12,7 @@ import {
   ModalFooter,
   Button,
 } from '@chakra-ui/react'
-import {useField, Formik, FieldArray} from 'formik'
+import {useField, Formik, FieldArray, useFormikContext} from 'formik'
 import {AddIcon} from '@chakra-ui/icons'
 import {map} from 'lodash'
 import {useState} from 'react'
@@ -24,22 +23,16 @@ import {withFirstItem} from '../../shared/utils/array'
 import schemaResponsavel, {
   defaultValues,
 } from '../../shared/schemas/responsavel'
+import {corPeleOptions} from '../../shared/data/corPele'
+// import {PaisResponsaveisTable} from './paisResponsaveis'
 import estados from '../../shared/data/estados'
 import niveisEscolaridade from '../../shared/data/niveisEscolaridade'
 import InputField from '../../shared/components/InputField'
 import CheckboxField from '../../shared/components/CheckboxField'
 import SelectField from '../../shared/components/SelectField'
-import PaisResponsaveisTable from './PaisResponsaveisTable'
 import RadioField from '../../shared/components/RadioField'
-import {corPeleOptions} from '../../shared/data/corPele'
-
-const FormRow = ({children, ...rest}) => {
-  return (
-    <HStack spacing={3} mb="5" alignItems="flex-start" {...rest}>
-      {children}
-    </HStack>
-  )
-}
+import FormRow from '../../shared/components/FormRow'
+import EnderecoForm from '../../shared/components/EnderecoForm'
 
 const ModalPaiResponsavel = ({
   onAdd = () => null,
@@ -208,13 +201,12 @@ const ModalPaiResponsavel = ({
   )
 }
 
-export default function AlunoForm({handleChange}) {
+export default function AlunoForm({handleChange, handleBlur}) {
+  const {errors} = useFormikContext()
   const [isModalPaisResponsaveisOpen, setIsModalPaisResponsaveisOpen] =
     useState(false)
   const [paiResponsavelSelecionado, setPaiResponsavelSelecionado] = useState(0)
-  const [responsaveisField] = useField({
-    name: 'responsaveis',
-  })
+
   return (
     <Container maxW="full">
       {/* row 1 */}
@@ -223,19 +215,21 @@ export default function AlunoForm({handleChange}) {
           <InputField
             name="nome"
             label="Nome:"
-            onChange={handleChange}
             maxLength={100}
             isRequired
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
         </Box>
         <Box flex={4}>
           <InputField
             name="dataNascimento"
             label="Data de Nascimento:"
-            onChange={handleChange}
             maxLength={10}
             mask={maskDateString}
             isRequired
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
         </Box>
       </FormRow>
@@ -360,85 +354,22 @@ export default function AlunoForm({handleChange}) {
         </Box>
       </FormRow>
 
-      <Box mt="50px"></Box>
-
-      {/* row 4 */}
-      <FormRow mt="30px">
-        <Text fontWeight="semibold">Endereço</Text>
-      </FormRow>
-
-      {/* row 5 */}
       <FormRow>
-        <Box flex={3}>
-          <InputField
-            name="endereco.rua"
-            label="Rua:"
-            onChange={handleChange}
-            maxLength={100}
-          />
-        </Box>
-
-        <Box flex={3}>
-          <InputField
-            name="endereco.bairro"
-            label="Bairro:"
-            onChange={handleChange}
-            maxLength={100}
-          />
-        </Box>
-
-        <Box flex={3}>
-          <InputField
-            name="endereco.numero"
-            label="Número:"
-            onChange={handleChange}
-            maxLength={6}
-          />
-        </Box>
-      </FormRow>
-
-      {/* row 6 */}
-      <FormRow>
-        <Box flex={3}>
-          <InputField
-            name="endereco.complemento"
-            label="Complemento:"
-            onChange={handleChange}
-            maxLength={100}
-          />
-        </Box>
-
-        <Box flex={3}>
-          <InputField
-            name="endereco.cidade"
-            label="Cidade:"
-            onChange={handleChange}
-            maxLength={100}
-          />
-        </Box>
-
-        <Box flex={3}>
-          <SelectField
-            name="endereco.estado"
-            items={map(estados, (estado) => ({
-              label: estado.nome,
-              value: estado.sigla,
-            }))}
-            onChange={handleChange}
-            label="Estado:"
-            isRequired
-          />
+        <Box flex={1}>
+          <Text>{JSON.stringify(errors)}</Text>
         </Box>
       </FormRow>
 
       <Box mt="50px"></Box>
 
-      {/* row 7 */}
+      {/* <EnderecoForm parentField="endereco" isRequired /> */}
+
+      <Box mt="50px"></Box>
+
+      {/* row 7
       <FormRow mt="30px">
         <Text fontWeight="semibold">Pais e Responsáveis</Text>
       </FormRow>
-
-      {/* row 8 */}
       {responsaveisField.value.length < 3 && (
         <FormRow justifyContent="flex-end">
           <IconButton
@@ -458,31 +389,7 @@ export default function AlunoForm({handleChange}) {
         </FormRow>
       )}
 
-      {/* row 10 */}
-      <FieldArray
-        name="responsaveis"
-        render={(arrayHelpers) => (
-          <>
-            {/* row 9 */}
-            <PaisResponsaveisTable
-              items={responsaveisField.value}
-              onRemove={(indexToRemove) => {
-                arrayHelpers.remove(indexToRemove)
-              }}
-              emptyTextMessage="Nenhum pai ou responsável foi informado"
-            />
-            <ModalPaiResponsavel
-              isOpen={isModalPaisResponsaveisOpen}
-              currentIndex={paiResponsavelSelecionado}
-              onAdd={(responsavel) => {
-                arrayHelpers.push(responsavel)
-                setIsModalPaisResponsaveisOpen(false)
-              }}
-              onClose={() => setIsModalPaisResponsaveisOpen(false)}
-            />
-          </>
-        )}
-      />
+       */}
     </Container>
   )
 }

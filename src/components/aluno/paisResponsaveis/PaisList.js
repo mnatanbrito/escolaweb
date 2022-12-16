@@ -11,7 +11,7 @@ import {
 import {DeleteIcon} from '@chakra-ui/icons'
 import {map} from 'lodash'
 
-const PaisResponsaveisTable = ({
+const PaisList = ({
   onRemove = () => null,
   items = [],
   emptyTextMessage = '',
@@ -46,4 +46,4 @@ const PaisResponsaveisTable = ({
   </Table>
 )
 
-export default PaisResponsaveisTable
+export default PaisList

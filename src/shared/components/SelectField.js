@@ -27,7 +27,7 @@ export default function SelectField({
   })
 
   return (
-    <FormControl isRequired={isRequired} isInvalid={meta.touched && meta.error}>
+    <FormControl isRequired={isRequired} isInvalid={meta.error}>
       <HStack spacing={0} justifyContent="flex-start" alignItems="flex-start">
         {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
       </HStack>

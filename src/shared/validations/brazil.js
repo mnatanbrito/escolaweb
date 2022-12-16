@@ -34,7 +34,7 @@ const calcSecondChecker = (cpfWithChecker1) => {
    */
 export function isValidCpf(value) {
   if (typeof value !== 'string' && typeof value !== 'number') {
-    console.warn('Unsupported value')
+    console.warn('isValidCpf unsupported value')
     return false
   }
 
