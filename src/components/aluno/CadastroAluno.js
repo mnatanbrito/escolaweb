@@ -12,8 +12,8 @@ import Panel from '../../shared/components/Panel'
 import AlunoForm from './AlunoForm'
 
 export default function CadastroAluno() {
-  const navigation = useNavigate()
   const {success, error} = useNotification()
+  const navigation = useNavigate()
 
   const onCadastrar = async (dadosAluno, actions) => {
     try {
@@ -36,6 +36,8 @@ export default function CadastroAluno() {
     }
   }
 
+  const onCancel = React.useCallback(() => navigation(-1), [])
+
   return (
     <ContentLayout title="Cadastro de Aluno" pt="5">
       <Formik
@@ -43,41 +45,29 @@ export default function CadastroAluno() {
         initialValues={defaultNovoAluno}
         onSubmit={onCadastrar}
       >
-        {({
-          handleSubmit,
-          handleChange,
-          handleBlur,
-          dirty,
-          isValid,
-          isSubmitting,
-          errors,
-        }) => (
+        {({dirty, isSubmitting, errors}) => (
           <Form>
             <Panel title="Dados do Aluno" mt="5">
-              <AlunoForm handleChange={handleChange} handleBlur={handleBlur} />
+              <AlunoForm />
             </Panel>
 
             {/* <Panel title="Dados sobre os pais">
               <PaisFormSection />
-            </Panel>
+            </Panel>*/}
 
             <Panel title="Dados sobre o responsável">
               <ResponsavelForm />
-            </Panel> */}
+            </Panel>
 
             <HStack spacing="5" mt="8" mb={7} justifyContent="center">
-              <Button
-                variant="ghost"
-                colorScheme="blue"
-                onClick={() => navigation(-1)}
-              >
+              <Button variant="ghost" colorScheme="blue" onClick={onCancel}>
                 Cancelar
               </Button>
               <Button
                 type="submit"
                 variant="solid"
                 colorScheme="blue"
-                disabled={!dirty || !isValid || isSubmitting}
+                disabled={!dirty || isSubmitting}
                 isLoading={isSubmitting}
               >
                 Cadastrar

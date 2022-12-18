@@ -29,12 +29,12 @@ export const cadastroAluno = object().shape({
   endereco: endereco.required().nullable(true),
 
   /* pais e responsaveis */
-  // pais: array(pai),
-  // responsavel: responsavel.when('pais', {
-  //   is: (pais) => (pais || []).length === 0,
-  //   then: (schema) => schema.required(),
-  //   otherwise: (schema) => schema.notRequired().nullable(true),
-  // }),
+  pais: array(pai),
+  responsavel: responsavel.when('pais', {
+    is: (pais) => (pais || []).length === 0,
+    then: (schema) => schema.required().nullable(true),
+    otherwise: (schema) => schema.notRequired().nullable(true),
+  }),
 })
 
 export const defaultNovoAluno = {
@@ -51,5 +51,5 @@ export const defaultNovoAluno = {
   necessidadesEducacionaisEspeciais: null,
   endereco: null,
   pais: [],
-  responsavel: null,
+  responsavel: {},
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import {useField} from 'formik'
+import {useField, useFormikContext} from 'formik'
 import {
   FormControl,
   FormLabel,
@@ -22,10 +22,10 @@ export default function InputField({
   leftIconColor,
   mask = null,
   isRequired = false,
-  onChange = () => null,
-  onBlur = () => null,
   ...rest
 }) {
+  const {isValid: isFormValid, submitCount} = useFormikContext()
+  const parentFormHasBeenSubmitted = submitCount > 0
   const [field, meta, {setValue}] = useField(name)
 
   const memoizedFormattedValue = React.useMemo(() => {
@@ -44,7 +44,13 @@ export default function InputField({
   )
 
   return (
-    <FormControl isRequired={isRequired} isInvalid={meta.error}>
+    <FormControl
+      isRequired={isRequired}
+      isInvalid={
+        (meta.touched && meta.error) ||
+        (parentFormHasBeenSubmitted && !isFormValid && meta.error)
+      }
+    >
       <HStack spacing={0} justifyContent="flex-start" alignItems="flex-start">
         {label && <FormLabel htmlFor={field.name}>{label}</FormLabel>}
       </HStack>

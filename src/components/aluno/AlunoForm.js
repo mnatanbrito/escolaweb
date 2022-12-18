@@ -201,25 +201,14 @@ const ModalPaiResponsavel = ({
   )
 }
 
-export default function AlunoForm({handleChange, handleBlur}) {
+export default function AlunoForm() {
   const {errors} = useFormikContext()
-  const [isModalPaisResponsaveisOpen, setIsModalPaisResponsaveisOpen] =
-    useState(false)
-  const [paiResponsavelSelecionado, setPaiResponsavelSelecionado] = useState(0)
 
   return (
     <Container maxW="full">
-      {/* row 1 */}
       <FormRow>
         <Box flex={8}>
-          <InputField
-            name="nome"
-            label="Nome:"
-            maxLength={100}
-            isRequired
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
+          <InputField name="nome" label="Nome:" maxLength={100} isRequired />
         </Box>
         <Box flex={4}>
           <InputField
@@ -228,19 +217,15 @@ export default function AlunoForm({handleChange, handleBlur}) {
             maxLength={10}
             mask={maskDateString}
             isRequired
-            onChange={handleChange}
-            onBlur={handleBlur}
           />
         </Box>
       </FormRow>
 
-      {/* row 2 */}
       <FormRow>
         <Box flex={6}>
           <InputField
             name="nacionalidade"
             label="Nacionalidade:"
-            onChange={handleChange}
             maxLength={100}
           />
         </Box>
@@ -248,19 +233,16 @@ export default function AlunoForm({handleChange, handleBlur}) {
           <InputField
             name="naturalidade"
             label="Naturalidade:"
-            onChange={handleChange}
             maxLength={100}
           />
         </Box>
       </FormRow>
 
-      {/* row 3 */}
       <FormRow mb="7">
         <Box flex={3}>
           <InputField
             name="dadosRg.rg"
             label="RG:"
-            onChange={handleChange}
             maxLength={100}
             isRequired
           />
@@ -269,7 +251,6 @@ export default function AlunoForm({handleChange, handleBlur}) {
           <InputField
             name="dadosRg.orgaoEmissor"
             label="Órgão Emissor:"
-            onChange={handleChange}
             maxLength={100}
             isRequired
           />
@@ -279,7 +260,6 @@ export default function AlunoForm({handleChange, handleBlur}) {
           <InputField
             name="dadosRg.dataEmissao"
             label="Data Emissão:"
-            onChange={handleChange}
             maxLength={10}
             mask={maskDateString}
             isRequired
@@ -290,7 +270,6 @@ export default function AlunoForm({handleChange, handleBlur}) {
           <InputField
             name="cpf"
             label="CPF:"
-            onChange={handleChange}
             maxLength={14}
             mask={maskCpf}
             isRequired
@@ -300,12 +279,7 @@ export default function AlunoForm({handleChange, handleBlur}) {
 
       <FormRow>
         <Box flex={3}>
-          <InputField
-            name="email"
-            label="Email:"
-            onChange={handleChange}
-            maxLength={100}
-          />
+          <InputField name="email" label="Email:" maxLength={100} />
         </Box>
       </FormRow>
 
@@ -315,6 +289,7 @@ export default function AlunoForm({handleChange, handleBlur}) {
             name="corPele"
             label="Cor da pele"
             options={corPeleOptions}
+            isRequired
           />
         </Box>
 
@@ -326,6 +301,7 @@ export default function AlunoForm({handleChange, handleBlur}) {
               {label: 'Sim', value: 'true'},
               {label: 'Não', value: 'false'},
             ]}
+            isRequired
           />
         </Box>
 
@@ -337,6 +313,7 @@ export default function AlunoForm({handleChange, handleBlur}) {
               {label: 'Sim', value: 'true'},
               {label: 'Não', value: 'false'},
             ]}
+            isRequired
           />
         </Box>
       </FormRow>
@@ -350,6 +327,7 @@ export default function AlunoForm({handleChange, handleBlur}) {
               {label: 'Sim', value: 'true'},
               {label: 'Não', value: 'false'},
             ]}
+            isRequired
           />
         </Box>
       </FormRow>
