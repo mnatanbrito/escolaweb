@@ -13,7 +13,6 @@ export const unwrapData = (doc) => {
  * Unwraps the query results into the specified collection.
  */
 export const unwrapDataInCollection = (collection) => (doc) => {
-  debugger
   if (doc.exists()) {
     collection.push({
       id: doc.id,
