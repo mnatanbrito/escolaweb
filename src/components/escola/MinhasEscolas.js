@@ -94,7 +94,7 @@ const MinhasEscolas = () => {
           </Thead>
           <Tbody>
             <>
-              {map(data, ({id, nome, endereco}) => (
+              {map(data, ({id, slug, nome, endereco}) => (
                 <Tr key={id}>
                   <Td>{nome}</Td>
                   <Td>
@@ -105,7 +105,7 @@ const MinhasEscolas = () => {
                   <Td>
                     <Stack direction="row" spacing={4}>
                       <HStack spacing="15px">
-                        <Link to={`/escolas/${id}`} title={nome}>
+                        <Link to={`/escolas/${slug}`} title={nome}>
                           <IconButton
                             icon={<FaHome />}
                             colorScheme="blue"

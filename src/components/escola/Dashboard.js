@@ -20,27 +20,27 @@ import {FaArrowLeft} from 'react-icons/fa'
 
 import {cacheKey} from './constants'
 import {cacheKey as alunosCacheKey} from '../aluno/constants'
-import {getEscola} from './service'
+import {getEscolaBySlug} from './service'
+import {getAlunos, getAlunosByEscola} from '../aluno/service'
 import Container from '../../shared/components/Container'
 import ListaAlunos from '../aluno/ListaAlunos'
-import {getAlunos} from '../aluno/service'
 
 export default function Dashboard() {
-  const {id} = useParams()
+  const {slug} = useParams()
   const {
     isLoading,
     error,
     data: escola,
-  } = useQuery([cacheKey, id], () => getEscola(id))
+  } = useQuery([cacheKey, slug], () => getEscolaBySlug(slug))
 
   const alunos = escola?.alunos || []
 
   const {
     error: errorAlunos,
-    isIdle,
+    isLoading: isLoadingAlunos,
     data: alunosDaEscola,
   } = useQuery([cacheKey, alunosCacheKey], () => getAlunos(alunos), {
-    enabled: !!alunos,
+    enabled: (alunos || []).length > 0,
   })
 
   return (
@@ -79,15 +79,16 @@ export default function Dashboard() {
             <>
               {isLoading && <Spinner />}
               {!isLoading && (
-                <Tabs variant="enclosed">
+                <Tabs variant="enclosed" flex={1}>
                   <TabList>
                     <Tab>Alunos</Tab>
                     <Tab>Professores</Tab>
+                    <Tab>Turmas</Tab>
                   </TabList>
                   <TabPanels>
                     <TabPanel>
                       <ListaAlunos
-                        isLoading={isIdle}
+                        isLoading={isLoadingAlunos}
                         error={errorAlunos}
                         alunos={alunosDaEscola}
                       />
@@ -95,6 +96,7 @@ export default function Dashboard() {
                     <TabPanel>
                       <p>Professores!</p>
                     </TabPanel>
+                    <TabPanel></TabPanel>
                   </TabPanels>
                 </Tabs>
               )}

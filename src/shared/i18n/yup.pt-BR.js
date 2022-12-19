@@ -3,10 +3,10 @@
 
 const i18n = {
   mixed: {
-    default: '${path} é inválido',
+    default: 'Valor inválido',
     required: 'Campo obrigatório',
-    oneOf: '${path} deve ser um dos seguintes valores: ${values}',
-    notOneOf: '${path} não pode ser um dos seguintes valores: ${values}',
+    oneOf: 'Valores permitidos: ${values}',
+    notOneOf: 'Valores proibidos: ${values}',
     notType: ({path, type, value, originalValue}) => {
       // let isCast = originalValue != null && originalValue !== value
       // let msg =
@@ -26,19 +26,19 @@ const i18n = {
     defined: '${path} deve estar definido',
   },
   string: {
-    length: '${path} deve ter ${length} caracteres',
-    min: '${path} deve ter no mínimo ${min} caracteres',
+    length: 'Quantidade de caracteres: ${length}',
+    min: 'Quantidade mínima de caracteres: ${min}',
     max: '${path} deve ter no máximo ${max} caracteres',
     matches: '${path} deve seguir o padrão: "${regex}"',
-    email: '${path} deve ser um email válido',
-    url: '${path} deve ser uma URL válida',
-    uuid: '${path} deve ser um UUID válido',
+    email: 'Email inválido',
+    url: 'URL inválida',
+    uuid: 'UUID inválido',
     trim: '${path} must be a trimmed string',
     lowercase: '${path} deve estar em minúscula',
     uppercase: '${path} deve estar em maiúscula',
     dataInvalida: '${path} é uma data inválida',
     dataFuturo: '${path} é uma data no futuro',
-    dataNascimento: 'Data de nascimento inválida'
+    dataNascimento: 'Data de nascimento inválida',
   },
   number: {
     min: '${path} deve ser maior ou igual a ${min}',

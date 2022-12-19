@@ -1,209 +1,14 @@
-import {
-  Box,
-  Container,
-  Text,
-  IconButton,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from '@chakra-ui/react'
-import {useField, Formik, FieldArray, useFormikContext} from 'formik'
-import {AddIcon} from '@chakra-ui/icons'
-import {map} from 'lodash'
-import {useState} from 'react'
+import {Box, Container} from '@chakra-ui/react'
 
 import {maskDateString} from '../../shared/utils/dates'
 import {maskCpf} from '../../shared/utils/strings'
-import {withFirstItem} from '../../shared/utils/array'
-import schemaResponsavel, {
-  defaultValues,
-} from '../../shared/schemas/responsavel'
 import {corPeleOptions} from '../../shared/data/corPele'
-// import {PaisResponsaveisTable} from './paisResponsaveis'
-import estados from '../../shared/data/estados'
-import niveisEscolaridade from '../../shared/data/niveisEscolaridade'
 import InputField from '../../shared/components/InputField'
-import CheckboxField from '../../shared/components/CheckboxField'
-import SelectField from '../../shared/components/SelectField'
 import RadioField from '../../shared/components/RadioField'
 import FormRow from '../../shared/components/FormRow'
 import EnderecoForm from '../../shared/components/EnderecoForm'
 
-const ModalPaiResponsavel = ({
-  onAdd = () => null,
-  onClose = () => null,
-  isOpen = false,
-}) => {
-  return (
-    <Modal onClose={onClose} isOpen={isOpen} isCentered>
-      <ModalOverlay />
-      <ModalContent>
-        <Formik
-          validationSchema={schemaResponsavel}
-          initialValues={defaultValues}
-          onSubmit={(values) => {
-            onAdd(values)
-          }}
-        >
-          {({
-            touched,
-            setFieldValue,
-            handleChange,
-            errors,
-            isValid,
-            handleSubmit,
-          }) => (
-            <form noValidate onSubmit={handleSubmit}>
-              <ModalHeader>Dados do responsável</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <FormRow>
-                  <Box flex={8}>
-                    <InputField
-                      name="nome"
-                      label="Nome:"
-                      onChange={handleChange}
-                      maxLength={100}
-                      isRequired
-                    />
-                  </Box>
-                </FormRow>
-
-                <FormRow>
-                  <CheckboxField isRequired name="falecido" text="Falecido:" />
-                </FormRow>
-
-                <FormRow>
-                  <Box flex={6}>
-                    <InputField
-                      name="nacionalidade"
-                      label="Nacionalidade:"
-                      onChange={handleChange}
-                      maxLength={100}
-                      isRequired
-                    />
-                  </Box>
-
-                  <Box flex={6}>
-                    <InputField
-                      name="naturalidade"
-                      label="Naturalidade:"
-                      onChange={handleChange}
-                      maxLength={100}
-                      isRequired
-                    />
-                  </Box>
-                </FormRow>
-
-                <FormRow>
-                  <InputField
-                    name="profissao"
-                    label="Profissão:"
-                    onChange={handleChange}
-                    maxLength={100}
-                  />
-                </FormRow>
-
-                <FormRow>
-                  <Box flex={3}>
-                    <InputField
-                      name="enderecoTrabalho.rua"
-                      label="Rua:"
-                      onChange={handleChange}
-                      maxLength={100}
-                    />
-                  </Box>
-
-                  <Box flex={3}>
-                    <InputField
-                      name="enderecoTrabalho.bairro"
-                      label="Bairro:"
-                      onChange={handleChange}
-                      maxLength={100}
-                    />
-                  </Box>
-                </FormRow>
-
-                <FormRow>
-                  <Box flex={3}>
-                    <InputField
-                      name="enderecoTrabalho.numero"
-                      label="Número:"
-                      onChange={handleChange}
-                      maxLength={6}
-                    />
-                  </Box>
-
-                  <Box flex={9}>
-                    <InputField
-                      name="enderecoTrabalho.complemento"
-                      label="Complemento:"
-                      onChange={handleChange}
-                      maxLength={100}
-                    />
-                  </Box>
-                </FormRow>
-
-                {/* row 6 */}
-                <FormRow>
-                  <Box>
-                    <InputField
-                      name="enderecoTrabalho.cidade"
-                      label="Cidade:"
-                      onChange={handleChange}
-                      maxLength={100}
-                    />
-                  </Box>
-
-                  <Box>
-                    <SelectField
-                      name="enderecoTrabalho.estado"
-                      label="Estado:"
-                      items={withFirstItem(
-                        map(estados, (estado) => ({
-                          label: estado.nome,
-                          value: estado.sigla,
-                        }))
-                      )}
-                      isRequired
-                    />
-                  </Box>
-                </FormRow>
-
-                <FormRow>
-                  <SelectField
-                    name="nivelEscolaridade"
-                    items={withFirstItem(niveisEscolaridade)}
-                    label="Escolaridade:"
-                  />
-                </FormRow>
-              </ModalBody>
-              <ModalFooter>
-                <FormRow justifyContent="flex-end" spacing="5px">
-                  <Button variant="ghost" onClick={onClose}>
-                    Cancelar
-                  </Button>
-                  <Button type="submit" disabled={!isValid || !touched}>
-                    Adicionar
-                  </Button>
-                </FormRow>
-              </ModalFooter>
-            </form>
-          )}
-        </Formik>
-      </ModalContent>
-    </Modal>
-  )
-}
-
 export default function AlunoForm() {
-  const {errors} = useFormikContext()
-
   return (
     <Container maxW="full">
       <FormRow>
@@ -289,7 +94,6 @@ export default function AlunoForm() {
             name="corPele"
             label="Cor da pele"
             options={corPeleOptions}
-            isRequired
           />
         </Box>
 
@@ -301,7 +105,6 @@ export default function AlunoForm() {
               {label: 'Sim', value: 'true'},
               {label: 'Não', value: 'false'},
             ]}
-            isRequired
           />
         </Box>
 
@@ -313,7 +116,6 @@ export default function AlunoForm() {
               {label: 'Sim', value: 'true'},
               {label: 'Não', value: 'false'},
             ]}
-            isRequired
           />
         </Box>
       </FormRow>
@@ -332,42 +134,9 @@ export default function AlunoForm() {
         </Box>
       </FormRow>
 
-      <FormRow>
-        <Box flex={1}>
-          <Text>{JSON.stringify(errors)}</Text>
-        </Box>
-      </FormRow>
-
       <Box mt="50px"></Box>
 
-      {/* <EnderecoForm parentField="endereco" isRequired /> */}
-
-      <Box mt="50px"></Box>
-
-      {/* row 7
-      <FormRow mt="30px">
-        <Text fontWeight="semibold">Pais e Responsáveis</Text>
-      </FormRow>
-      {responsaveisField.value.length < 3 && (
-        <FormRow justifyContent="flex-end">
-          <IconButton
-            aria-label="Cadastrar pai ou responsável"
-            colorScheme="blue"
-            icon={<AddIcon />}
-            onClick={() => {
-              const paisResponsaveis = responsaveisField.value || []
-              setPaiResponsavelSelecionado(
-                paisResponsaveis.length === 0
-                  ? paisResponsaveis.length
-                  : paisResponsaveis.length + 1
-              )
-              setIsModalPaisResponsaveisOpen(true)
-            }}
-          />
-        </FormRow>
-      )}
-
-       */}
+      <EnderecoForm parentField="endereco" isRequired />
     </Container>
   )
 }

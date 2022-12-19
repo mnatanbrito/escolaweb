@@ -1,9 +1,9 @@
 import React from 'react'
 import {Flex} from '@chakra-ui/react'
 
-export default function Container({children}) {
+export default function Container({children, ...rest}) {
   return (
-    <Flex flex={1} justify="center" align="flex-start">
+    <Flex flex={1} justify="center" align="flex-start" {...rest}>
       <Flex
         flexGrow={1}
         position="relative"

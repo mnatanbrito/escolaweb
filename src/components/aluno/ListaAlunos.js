@@ -18,7 +18,12 @@ import {map} from 'lodash'
 import {FaHome, FaRedo, FaEdit} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
 
-export default function ListaAlunos({isLoading, error, alunos}) {
+export default function ListaAlunos({
+  isLoading,
+  error,
+  alunos,
+  emptyMessage = 'Nenhum aluno cadastrado.',
+}) {
   if (isLoading) {
     return (
       <Stack>
@@ -50,6 +55,8 @@ export default function ListaAlunos({isLoading, error, alunos}) {
     )
   }
 
+  const emptyData = (alunos || []).length === 0
+
   return (
     <Table variant="simple">
       <Thead>
@@ -61,32 +68,41 @@ export default function ListaAlunos({isLoading, error, alunos}) {
       </Thead>
       <Tbody>
         <>
-          {map(alunos, ({id, nome, email}) => (
-            <Tr key={id}>
-              <Td>{nome}</Td>
-              <Td></Td>
-              <Td>
-                <Stack direction="row" spacing={4}>
-                  <HStack spacing="15px">
-                    <Link to={`/alunos/${id}`} title={nome}>
-                      <IconButton
-                        icon={<FaHome />}
-                        colorScheme="blue"
-                        variant="outline"
-                        title="Ir para a página do aluno"
-                      />
-                    </Link>
-                    <IconButton
-                      icon={<FaEdit />}
-                      colorScheme="blue"
-                      variant="outline"
-                      title="Editar dados do aluno"
-                    />
-                  </HStack>
-                </Stack>
-              </Td>
+          {emptyData && (
+            <Tr>
+              <Td colSpan={3}>{emptyMessage}</Td>
             </Tr>
-          ))}
+          )}
+          {!emptyData && (
+            <>
+              {map(alunos, ({id, nome, email}) => (
+                <Tr key={id}>
+                  <Td>{nome}</Td>
+                  <Td></Td>
+                  <Td>
+                    <Stack direction="row" spacing={4}>
+                      <HStack spacing="15px">
+                        <Link to={`/alunos/${id}`} title={nome}>
+                          <IconButton
+                            icon={<FaHome />}
+                            colorScheme="blue"
+                            variant="outline"
+                            title="Ir para a página do aluno"
+                          />
+                        </Link>
+                        <IconButton
+                          icon={<FaEdit />}
+                          colorScheme="blue"
+                          variant="outline"
+                          title="Editar dados do aluno"
+                        />
+                      </HStack>
+                    </Stack>
+                  </Td>
+                </Tr>
+              ))}
+            </>
+          )}
         </>
       </Tbody>
     </Table>

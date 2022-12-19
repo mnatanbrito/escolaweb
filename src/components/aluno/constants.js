@@ -1,1 +1,1 @@
-export const cacheKey = 'aluno'
+export const cacheKey = 'alunos'

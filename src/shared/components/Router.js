@@ -4,13 +4,11 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import BaseLayout from './BaseLayout'
 import SplashScreen from '../../components/auth/SplashScreen'
 import useEnv from '../hooks/useEnv'
+import Dashboard from '../../components/dashboard/Dashboard'
 
 /**
  * Lazy loaded routes
  */
-const Dashboard = React.lazy(() =>
-  import('../../components/dashboard/Dashboard')
-)
 const DashboardEscola = React.lazy(() =>
   import('../../components/escola/Dashboard')
 )
@@ -28,7 +26,7 @@ export default function Router() {
           <Route path="/" element={<BaseLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="/escolas/:id" element={<DashboardEscola />} />
+            <Route path="/escolas/:slug" element={<DashboardEscola />} />
             <Route path="/alunos/cadastro" element={<CadastroAluno />} />
             {isDev && <Route path="/produtos" element={<CadastroProdutos />} />}
 

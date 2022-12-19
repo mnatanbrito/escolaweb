@@ -1,4 +1,4 @@
-import {maskCpf} from './strings'
+import {maskCpf, unmaskCpf} from './strings'
 
 describe('strings', () => {
   describe('maskCpf', () => {
@@ -11,6 +11,12 @@ describe('strings', () => {
       expect(maskCpf('123456')).toBe('123456')
       expect(maskCpf('123456789')).toBe('123456789')
       expect(maskCpf('1234567891')).toBe('1234567891')
+    })
+  })
+
+  describe('unmaskCpf', () => {
+    test('Should remove the mask correctly to complete cpf', () => {
+      expect(unmaskCpf('123.456.789-12')).toBe('12345678912')
     })
   })
 })

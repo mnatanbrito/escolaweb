@@ -1,9 +1,10 @@
-import {object, string} from 'yup'
+import {object} from 'yup'
 
+import {requiredString} from './strings'
 import dataPassada from './dataPassada'
 
 export default object().shape({
-  rg: string().nullable(false).required(),
-  orgaoEmissor: string().nullable(false).required(),
-  dataEmissao: dataPassada.nullable(false).required(),
+  rg: requiredString,
+  orgaoEmissor: requiredString,
+  dataEmissao: dataPassada.required().nullable(true),
 })
