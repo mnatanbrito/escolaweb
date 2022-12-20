@@ -13,7 +13,7 @@ import {
   Tr,
 } from '@chakra-ui/react'
 import {map} from 'lodash'
-import {FaEdit, FaHome, FaRedo} from 'react-icons/fa'
+import {FaEdit, FaHome, FaRedo, FaTrash} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
 import Pagination from '../../shared/components/Pagination'
 import Row from '../../shared/components/Row'
@@ -25,6 +25,7 @@ const ListaEscolas = ({
   data,
   refetch,
   onEdit,
+  onDelete,
   hasPrevious,
   hasNext,
   loadPrevious,
@@ -88,6 +89,13 @@ const ListaEscolas = ({
                         variant="outline"
                         onClick={() => onEdit(id)}
                         title="Editar dados da escola"
+                      />
+                      <IconButton
+                        icon={<FaTrash />}
+                        colorScheme="blue"
+                        variant="outline"
+                        onClick={() => onDelete(id)}
+                        title="Excluir registro da escola"
                       />
                     </HStack>
                   </Stack>

@@ -44,6 +44,10 @@ const MinhasEscolas = () => {
 
   const onUpdate = () => {}
 
+  const onDelete = (idEscola) => {
+    console.info(`Excluindo escola ${idEscola}`)
+  }
+
   if (isLoading) {
     return (
       <Stack>
@@ -64,6 +68,7 @@ const MinhasEscolas = () => {
           data={data}
           refetch={refetch}
           onEdit={onEditEscola}
+          onDelete={onDelete}
           hasPrevious={hasPrevious}
           hasNext={hasNext}
           loadPrevious={loadPrevious}
