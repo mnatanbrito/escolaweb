@@ -1,17 +1,8 @@
 import React, {useState} from 'react'
 import {
-  Table,
-  Thead,
-  Tr,
-  Tbody,
-  Td,
-  Th,
   Stack,
   Button,
-  Alert,
-  AlertIcon,
   Skeleton,
-  IconButton,
   HStack,
   Modal,
   ModalOverlay,
@@ -22,24 +13,28 @@ import {
   ModalFooter,
   useDisclosure,
 } from '@chakra-ui/react'
-import {FaHome, FaRedo, FaEdit} from 'react-icons/fa'
-import {map, find} from 'lodash'
-import {Link} from 'react-router-dom'
-import {useQuery} from 'react-query'
+import {find} from 'lodash'
 import {Formik, Form} from 'formik'
 
-import {getEscolas} from './service'
-import {cacheKey} from './constants'
 import {cadastroEscola as schema} from './schemas'
 import EscolaForm from './EscolaForm'
 import Panel from '../../shared/components/Panel'
+import ListaEscolas from './ListaEscolas'
+import useEscolasQuery from './useEscolasQuery'
 
 const MinhasEscolas = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
-  const {isFetching, isLoading, error, data, refetch} = useQuery(
-    cacheKey,
-    getEscolas
-  )
+  const {
+    isFetching,
+    isLoading,
+    error,
+    data,
+    refetch,
+    hasPrevious,
+    hasNext,
+    loadPrevious,
+    loadNext,
+  } = useEscolasQuery()
   const [escolaSelecionada, setEscolaSelecionada] = useState()
 
   const onEditEscola = (idEscola) => {
@@ -59,75 +54,21 @@ const MinhasEscolas = () => {
     )
   }
 
-  if (error) {
-    return (
-      <Stack spacing={3}>
-        <Alert status="error">
-          <AlertIcon />
-          Não foi possível carregar a lista de escolas
-        </Alert>
-        <Button
-          rightIcon={<FaRedo />}
-          colorScheme="teal"
-          variant="link"
-          onClick={refetch}
-          disabled={isFetching}
-          size="sm"
-          isLoading={isFetching}
-        >
-          Carregar novamente
-        </Button>
-      </Stack>
-    )
-  }
-
   return (
     <>
       <Panel title="Minhas escolas">
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Nome</Th>
-              <Th>Endereço</Th>
-              <Th>Opções</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <>
-              {map(data, ({id, slug, nome, endereco}) => (
-                <Tr key={id}>
-                  <Td>{nome}</Td>
-                  <Td>
-                    {endereco
-                      ? `${endereco.numero}, ${endereco.rua}, ${endereco.bairro}, ${endereco.cidade}`
-                      : ''}{' '}
-                  </Td>
-                  <Td>
-                    <Stack direction="row" spacing={4}>
-                      <HStack spacing="15px">
-                        <Link to={`/escolas/${slug}`} title={nome}>
-                          <IconButton
-                            icon={<FaHome />}
-                            colorScheme="blue"
-                            variant="outline"
-                            title="Ir para a página da escola"
-                          />
-                        </Link>
-                        <IconButton
-                          icon={<FaEdit />}
-                          colorScheme="blue"
-                          variant="outline"
-                          onClick={() => onEditEscola(id)}
-                          title="Editar dados da escola"
-                        />
-                      </HStack>
-                    </Stack>
-                  </Td>
-                </Tr>
-              ))}
-            </>
-          </Tbody>
-        </Table>
+        <ListaEscolas
+          isFetching={isFetching}
+          isLoading={isLoading}
+          error={error}
+          data={data}
+          refetch={refetch}
+          onEdit={onEditEscola}
+          hasPrevious={hasPrevious}
+          hasNext={hasNext}
+          loadPrevious={loadPrevious}
+          loadNext={loadNext}
+        />
       </Panel>
 
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -143,16 +84,12 @@ const MinhasEscolas = () => {
               alert(values)
             }}
           >
-            {({handleSubmit, handleChange, dirty}) => (
-              <Form onSubmit={handleSubmit}>
+            {({dirty}) => (
+              <Form>
                 <ModalHeader>Editar dados</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <EscolaForm
-                    id={escolaSelecionada}
-                    handleSubmit={handleSubmit}
-                    handleChange={handleChange}
-                  />
+                  <EscolaForm />
                 </ModalBody>
                 <ModalFooter>
                   <HStack spacing="5px">

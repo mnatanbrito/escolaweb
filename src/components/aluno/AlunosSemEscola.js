@@ -1,8 +1,7 @@
+import {StatGroup, Stat, StatLabel, StatNumber, Spinner} from '@chakra-ui/react'
 import {useQuery} from 'react-query'
 
 import {getAlunosSemEscola} from './service'
-import Panel from '../../shared/components/Panel'
-import ListaAlunos from './ListaAlunos'
 
 const AlunosSemEscola = () => {
   const {isLoading, error, data} = useQuery(['alunos-sem-escola'], () =>
@@ -10,14 +9,19 @@ const AlunosSemEscola = () => {
   )
 
   return (
-    <Panel title="Alunos sem escola">
-      <ListaAlunos
-        isLoading={isLoading}
-        error={error}
-        alunos={data}
-        emptyMessage="Nenhum aluno sem escola registrado"
-      />
-    </Panel>
+    <StatGroup>
+      {!error && (
+        <Stat>
+          {isLoading && <Spinner size="sm" />}
+          {!isLoading && (
+            <>
+              <StatLabel>Alunos sem escola</StatLabel>
+              <StatNumber>{(data || []).length}</StatNumber>
+            </>
+          )}
+        </Stat>
+      )}
+    </StatGroup>
   )
 }
 

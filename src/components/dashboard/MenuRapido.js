@@ -5,9 +5,8 @@ import {useNavigate} from 'react-router'
 
 import useEnv from '../../shared/hooks/useEnv'
 
-export default function MenuRapido() {
-  const {isDev} = useEnv()
-  const navigation = useNavigate()
+const MenuRapidoWrapper = ({children}) => {
+  // TODO: verify if the user has the proper permissions to show each button
 
   return (
     <HStack
@@ -19,6 +18,17 @@ export default function MenuRapido() {
       width="100%"
       marginTop="5"
     >
+      {children}
+    </HStack>
+  )
+}
+
+export default function MenuRapido({onClick = (cmd) => null}) {
+  const {isDev} = useEnv()
+  const navigation = useNavigate()
+
+  return (
+    <MenuRapidoWrapper>
       {isDev && (
         <Button
           colorScheme="blue"
@@ -50,6 +60,17 @@ export default function MenuRapido() {
       >
         Cadastrar aluno
       </Button>
-    </HStack>
+
+      <Button
+        colorScheme="blue"
+        aria-label="Cadastrar escola"
+        variant="solid"
+        leftIcon={<FaPlusCircle />}
+        onClick={() => onClick('cadastro-escola')}
+        title="Cadastrar uma nova escola"
+      >
+        Cadastrar escola
+      </Button>
+    </MenuRapidoWrapper>
   )
 }

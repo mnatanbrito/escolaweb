@@ -15,9 +15,6 @@ export default function SelectField({
   label,
   items,
   isRequired = false,
-  fieldValueExtractor = null,
-  onChange,
-  onBlur,
   ...rest
 }) {
   const {isValid: isFormValid, submitCount} = useFormikContext()

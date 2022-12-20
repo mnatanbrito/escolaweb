@@ -1,73 +1,25 @@
 import React from 'react'
-import {map} from 'lodash'
-import {Box, HStack} from '@chakra-ui/react'
+import {Box} from '@chakra-ui/react'
 
-import SelectField from '../../shared/components/SelectField'
 import InputField from '../../shared/components/InputField'
-import estados from '../../shared/data/estados'
+import FormRow from '../../shared/components/FormRow'
+import EnderecoForm from '../../shared/components/EnderecoForm'
 
-export default function EscolaForm({handleChange}) {
+export default function EscolaForm() {
   return (
     <>
-      <InputField
-        name="nome"
-        label="Nome:"
-        isRequired
-        onChange={handleChange}
-        marginBottom="10px"
-      />
+      <FormRow>
+        <Box flex={1}>
+          <InputField
+            name="nome"
+            label="Nome:"
+            isRequired
+            marginBottom="10px"
+          />
+        </Box>
+      </FormRow>
 
-      <HStack spacing={3} mb="5" alignItems="flex-start">
-        <Box w="80%">
-          <InputField
-            name="endereco.rua"
-            label="Rua:"
-            isRequired
-            onChange={handleChange}
-            marginBottom="10px"
-          />
-        </Box>
-        <Box>
-          <InputField
-            name="endereco.numero"
-            label="Número:"
-            isRequired
-            onChange={handleChange}
-            marginBottom="10px"
-          />
-        </Box>
-      </HStack>
-
-      <InputField
-        name="endereco.complemento"
-        label="Complemento:"
-        onChange={handleChange}
-        marginBottom="10px"
-      />
-      <HStack spacing={3} mb="5" alignItems="flex-start">
-        <Box w="80%">
-          <InputField
-            name="endereco.cidade"
-            label="Cidade:"
-            isRequired
-            onChange={handleChange}
-            marginBottom="10px"
-          />
-        </Box>
-        <Box>
-          <SelectField
-            name="estado"
-            items={map(estados, (estado) => ({
-              label: estado.nome,
-              value: estado.sigla,
-            }))}
-            onChange={handleChange}
-            label="Estado:"
-            marginBottom="10px"
-            isRequired
-          />
-        </Box>
-      </HStack>
+      <EnderecoForm parentField="endereco" />
     </>
   )
 }

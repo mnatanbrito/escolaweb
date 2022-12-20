@@ -7,6 +7,9 @@ import {
   query,
   where,
   limit,
+  addDoc,
+  orderBy,
+  startAfter,
 } from 'firebase/firestore'
 
 import {cacheKey} from './constants'
@@ -16,18 +19,31 @@ import firebase from '../../shared/firebase'
 const db = getFirestore(firebase)
 const escolasRef = collection(db, cacheKey)
 
-export const getEscolas = async () => {
+export const getEscolas = async ({skip = 0, take = 5, lastVisible = null}) => {
   const escolas = []
-  const escolasQuerySnapshot = await getDocs(collection(db, cacheKey))
+  const q =
+    skip !== 0
+      ? query(
+          collection(db, cacheKey),
+          orderBy('dataCriacao'),
+          startAfter(lastVisible),
+          limit(take)
+        )
+      : query(collection(db, cacheKey), orderBy('dataCriacao'), limit(take))
+  const documentSnapshots = await getDocs(q)
 
-  escolasQuerySnapshot.forEach((doc) => {
+  documentSnapshots.forEach((doc) => {
     escolas.push({
       id: doc.id,
       ...doc.data(),
     })
   })
 
-  return escolas
+  return {
+    hasNext: escolas.length === take,
+    lastVisible: documentSnapshots.docs[documentSnapshots.docs.length - 1],
+    escolas,
+  }
 }
 
 export const getEscola = async (id) => {
@@ -57,4 +73,9 @@ export const getEscolaBySlug = async (slug) => {
   querySnapshot.forEach(unwrapDataInCollection(results))
 
   return results[0]
+}
+
+export const addEscola = async (dadosEscola) => {
+  const docRef = await addDoc(escolasRef, dadosEscola)
+  return docRef.id
 }
