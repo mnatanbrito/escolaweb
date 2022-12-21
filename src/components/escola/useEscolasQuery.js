@@ -1,14 +1,15 @@
 import React from 'react'
-import {useQuery} from 'react-query'
+import {useMutation, useQuery} from 'react-query'
 
 import {cacheKey} from './constants'
-import {getEscolas} from './service'
+import {deleteEscola, getEscolas} from './service'
 
 const take = 3
 
 const useEscolasQuery = () => {
   const [page, setPage] = React.useState(0)
   const [lastEscola, setLastEscola] = React.useState(null)
+  const deleteMutation = useMutation((idEscola) => deleteEscola(idEscola))
   const {isFetching, isLoading, error, data, refetch} = useQuery(
     [cacheKey, page],
     () =>
@@ -36,6 +37,16 @@ const useEscolasQuery = () => {
     setPage((val) => val + 1)
   }
 
+  const deleteEscolaMutation = (idEscola, onSuccess, onError) => {
+    deleteMutation.mutate(idEscola, {
+      onSuccess: () => {
+        onSuccess && onSuccess()
+        setPage(0)
+      },
+      onError,
+    })
+  }
+
   return {
     hasPrevious: page > 0,
     hasNext,
@@ -46,6 +57,7 @@ const useEscolasQuery = () => {
     refetch,
     loadPrevious,
     loadNext,
+    deleteEscola: deleteEscolaMutation,
   }
 }
 export default useEscolasQuery

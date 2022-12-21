@@ -1,82 +1,16 @@
-import React, {useState} from 'react'
-import {
-  Stack,
-  Button,
-  Skeleton,
-  HStack,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
-} from '@chakra-ui/react'
-import {find} from 'lodash'
-import {Formik, Form} from 'formik'
+import React from 'react'
 
-import {cadastroEscola as schema} from './schemas'
-import EscolaForm from './EscolaForm'
 import Panel from '../../shared/components/Panel'
 import ListaEscolas from './ListaEscolas'
-import useEscolasQuery from './useEscolasQuery'
 
 const MinhasEscolas = () => {
-  const {isOpen, onOpen, onClose} = useDisclosure()
-  const {
-    isFetching,
-    isLoading,
-    error,
-    data,
-    refetch,
-    hasPrevious,
-    hasNext,
-    loadPrevious,
-    loadNext,
-  } = useEscolasQuery()
-  const [escolaSelecionada, setEscolaSelecionada] = useState()
-
-  const onEditEscola = (idEscola) => {
-    setEscolaSelecionada(idEscola)
-    onOpen()
-  }
-
-  const onUpdate = () => {}
-
-  const onDelete = (idEscola) => {
-    console.info(`Excluindo escola ${idEscola}`)
-  }
-
-  if (isLoading) {
-    return (
-      <Stack>
-        <Skeleton height="20px" />
-        <Skeleton height="20px" />
-        <Skeleton height="20px" />
-      </Stack>
-    )
-  }
-
   return (
     <>
       <Panel title="Minhas escolas">
-        <ListaEscolas
-          isFetching={isFetching}
-          isLoading={isLoading}
-          error={error}
-          data={data}
-          refetch={refetch}
-          onEdit={onEditEscola}
-          onDelete={onDelete}
-          hasPrevious={hasPrevious}
-          hasNext={hasNext}
-          loadPrevious={loadPrevious}
-          loadNext={loadNext}
-        />
+        <ListaEscolas />
       </Panel>
 
-      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+      {/* <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>
           <Formik
@@ -110,7 +44,7 @@ const MinhasEscolas = () => {
             )}
           </Formik>
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </>
   )
 }

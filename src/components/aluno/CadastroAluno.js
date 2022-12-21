@@ -18,11 +18,11 @@ export default function CadastroAluno() {
   const {success, error} = useNotification()
   const navigation = useNavigate()
 
-  const onCadastrar = async (dadosAluno, actions) => {
+  const onCadastrar = (dadosAluno, actions) => {
     try {
       const aluno = cadastroAluno.cast(dadosAluno)
       // existe algum outro aluno com o mesmo CPF?
-      await mutation.mutate(converter(aluno))
+      mutation.mutate(converter(aluno))
 
       actions.resetForm(defaultNovoAluno)
 

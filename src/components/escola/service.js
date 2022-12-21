@@ -10,6 +10,7 @@ import {
   addDoc,
   orderBy,
   startAfter,
+  deleteDoc,
 } from 'firebase/firestore'
 
 import {cacheKey} from './constants'
@@ -24,12 +25,12 @@ export const getEscolas = async ({skip = 0, take = 5, lastVisible = null}) => {
   const q =
     skip !== 0
       ? query(
-          collection(db, cacheKey),
+          escolasRef,
           orderBy('dataCriacao'),
           startAfter(lastVisible),
           limit(take)
         )
-      : query(collection(db, cacheKey), orderBy('dataCriacao'), limit(take))
+      : query(escolasRef, orderBy('dataCriacao'), limit(take))
   const documentSnapshots = await getDocs(q)
 
   documentSnapshots.forEach((doc) => {
@@ -78,4 +79,8 @@ export const getEscolaBySlug = async (slug) => {
 export const addEscola = async (dadosEscola) => {
   const docRef = await addDoc(escolasRef, dadosEscola)
   return docRef.id
+}
+
+export const deleteEscola = async (idEscola) => {
+  await deleteDoc(doc(escolasRef, idEscola))
 }
