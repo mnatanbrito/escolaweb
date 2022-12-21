@@ -21,6 +21,7 @@ const db = getFirestore(firebase)
 const escolasRef = collection(db, cacheKey)
 
 export const getEscolas = async ({skip = 0, take = 5, lastVisible = null}) => {
+  // TODO: add a filter by "ativa = true" that is attached to the auth role of the user
   const escolas = []
   const q =
     skip !== 0
