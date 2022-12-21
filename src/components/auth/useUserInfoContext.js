@@ -5,7 +5,9 @@ import UserInfoContext from './UserInfoContext'
 const useUserInfoContext = () => {
   const userInfoContext = React.useContext(UserInfoContext)
   if (!userInfoContext) {
-    return {}
+    return {
+      roles: [],
+    }
   }
 
   const {
@@ -23,6 +25,7 @@ const useUserInfoContext = () => {
     isAnonymous,
     createdAt: new Date(parseInt(createdAt)),
     lastLoginAt: new Date(parseInt(lastLoginAt)),
+    roles: [],
   }
 }
 

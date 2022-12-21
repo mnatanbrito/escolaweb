@@ -7,6 +7,7 @@ const Pagination = ({
   onPrevious,
   onNext,
 }) => {
+  // TODO: search for a better way to implement pagination without needing to load an empty page at the end
   return (
     <Box justifyContent="center" mt={5}>
       <Button

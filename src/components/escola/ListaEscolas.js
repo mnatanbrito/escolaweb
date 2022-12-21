@@ -24,10 +24,11 @@ import Row from '../../shared/components/Row'
 import ConfirmationModal from '../../shared/components/ConfirmationModal'
 import useEscolasQuery from './useEscolasQuery'
 import useNotification from '../../shared/hooks/useNotification'
-import useUserInfoContext from '../auth/useUserInfoContext'
+import ModalEscolaForm from './ModalEscolaForm'
+import useRoles from '../../shared/hooks/useRoles'
 
 const ListaEscolas = () => {
-  const {email} = useUserInfoContext()
+  const {isAdministrador} = useRoles()
   const {success: successNotification, error: errorNotification} =
     useNotification()
   const {
@@ -143,8 +144,7 @@ const ListaEscolas = () => {
                           title="Ir para a página da escola"
                         />
                       </Link>
-                      {/** I know what I'm doing here. I'll refactor it later */}
-                      {email === 'mnatan.brito@gmail.com' && (
+                      {isAdministrador && (
                         <>
                           <IconButton
                             icon={<FaEdit />}
@@ -187,6 +187,8 @@ const ListaEscolas = () => {
         onClose={closeModal}
         onConfirm={onDelete}
       />
+
+      <ModalEscolaForm />
     </>
   )
 }
