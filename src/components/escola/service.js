@@ -11,6 +11,8 @@ import {
   orderBy,
   startAfter,
   deleteDoc,
+  updateDoc,
+  serverTimestamp,
 } from 'firebase/firestore'
 
 import {cacheKey} from './constants'
@@ -84,4 +86,13 @@ export const addEscola = async (dadosEscola) => {
 
 export const deleteEscola = async (idEscola) => {
   await deleteDoc(doc(escolasRef, idEscola))
+}
+
+export const updateEscola = async (idEscola, dadosEscola) => {
+  const docRef = doc(escolasRef, idEscola)
+
+  await updateDoc(docRef, {
+    ...dadosEscola,
+    dataAtualizacao: serverTimestamp(),
+  })
 }

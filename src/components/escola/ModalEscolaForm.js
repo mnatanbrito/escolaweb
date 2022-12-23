@@ -33,7 +33,7 @@ const ModalEscolaForm = ({
       })
       actions.resetForm()
     } catch (err) {
-      console.error('Erro ao cadastras escola', {
+      console.error(`Erro ao ${isUpdate ? 'atualizar' : 'cadastrar'} escola`, {
         err,
       })
       actions.setSubmitting(false)

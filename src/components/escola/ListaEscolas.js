@@ -42,20 +42,31 @@ const ListaEscolas = () => {
     loadPrevious,
     loadNext,
     deleteEscola,
+    updateEscola,
   } = useEscolasQuery()
   const [escolaSelecionada, setEscolaSelecionada] = React.useState(null)
   const {
-    isOpen,
-    onOpen: showModal,
-    onClose: closeModal,
+    isOpen: isDeleteModalOpen,
+    onOpen: showDeleteModal,
+    onClose: closeDeleteModal,
   } = useDisclosure({
     onClose: () => {
       setEscolaSelecionada(null)
     },
   })
+  const {
+    isOpen: isFormModalOpen,
+    onOpen: showFormModal,
+    onClose: closeFormModal,
+  } = useDisclosure({
+    onClose: () => {
+      setEscolaSelecionada(null)
+    },
+  })
+
   const onConfirmDelete = (idEscola) => {
     setEscolaSelecionada(idEscola)
-    showModal()
+    showDeleteModal()
   }
 
   const onDelete = (idEscola) => {
@@ -76,9 +87,31 @@ const ListaEscolas = () => {
     )
   }
 
-  const onEdit = (idEscola) => {
-    // TODO: implement edit modal
-    console.info(`Editando escola ${idEscola}`)
+  const onEdit = (escola) => {
+    setEscolaSelecionada(escola)
+    showFormModal()
+  }
+
+  const onSubmitEscola = ({type, data}) => {
+    if (type === 'update') {
+      updateEscola(
+        data.id,
+        data,
+        () => {
+          closeFormModal()
+          successNotification({
+            title: 'Sucesso',
+            description: 'Escola atualizada com sucesso!',
+          })
+        },
+        () => {
+          errorNotification({
+            title: 'Erro',
+            description: 'Erro ao atualizar escola!',
+          })
+        }
+      )
+    }
   }
 
   if (isLoading) {
@@ -125,18 +158,18 @@ const ListaEscolas = () => {
         </Thead>
         <Tbody>
           <>
-            {map(data, ({id, slug, nome, endereco}) => (
-              <Tr key={id}>
-                <Td>{nome}</Td>
+            {map(data, (escola) => (
+              <Tr key={escola.id}>
+                <Td>{escola.nome}</Td>
                 <Td>
-                  {endereco
-                    ? `${endereco.numero}, ${endereco.rua}, ${endereco.bairro}, ${endereco.cidade}`
+                  {escola.endereco
+                    ? `${escola.endereco.numero}, ${escola.endereco.rua}, ${escola.endereco.bairro}, ${escola.endereco.cidade}`
                     : ''}{' '}
                 </Td>
                 <Td>
                   <Stack direction="row" spacing={4}>
                     <HStack spacing="15px">
-                      <Link to={`/escolas/${slug}`} title={nome}>
+                      <Link to={`/escolas/${escola.slug}`} title={escola.nome}>
                         <IconButton
                           icon={<FaHome />}
                           colorScheme="blue"
@@ -150,14 +183,14 @@ const ListaEscolas = () => {
                             icon={<FaEdit />}
                             colorScheme="blue"
                             variant="outline"
-                            onClick={() => onEdit(id)}
+                            onClick={() => onEdit(escola)}
                             title="Editar dados da escola"
                           />
                           <IconButton
                             icon={<FaTrash />}
                             colorScheme="blue"
                             variant="outline"
-                            onClick={() => onConfirmDelete(id)}
+                            onClick={() => onConfirmDelete(escola.id)}
                             title="Excluir registro da escola"
                           />
                         </>
@@ -180,15 +213,20 @@ const ListaEscolas = () => {
       </Row>
 
       <ConfirmationModal
-        isOpen={isOpen}
+        isOpen={isDeleteModalOpen}
         data={escolaSelecionada}
         title="Confirmação"
         message="Desejar confirmar a exclusão?"
-        onClose={closeModal}
+        onClose={closeDeleteModal}
         onConfirm={onDelete}
       />
 
-      <ModalEscolaForm />
+      <ModalEscolaForm
+        isOpen={isFormModalOpen}
+        onClose={closeFormModal}
+        onSubmit={onSubmitEscola}
+        escola={escolaSelecionada}
+      />
     </>
   )
 }
