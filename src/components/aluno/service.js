@@ -11,10 +11,16 @@ import {
 import {cacheKey} from './constants'
 import {unwrapDataInCollection} from '../../shared/service/utils'
 import firebase from '../../shared/firebase'
+import {getDataByField} from '../../shared/service/firestore'
 
 const db = getFirestore(firebase)
 const alunosRef = collection(db, cacheKey)
 
+/**
+ * Retorna alunos cujo CPF tem o valor informado como parâmetro.
+ * @param {String} cpf - CPF do aluno a ser encontrado.
+ * @returns Lista de alunos.
+ */
 export const getAlunoByCPF = async (cpf) => {
   if (!cpf) {
     throw new Error('CPF não informado')
@@ -30,6 +36,30 @@ export const getAlunoByCPF = async (cpf) => {
   querySnapshot.forEach(unwrapDataInCollection(results))
 
   return results[0]
+}
+
+export const getAlunosByCPF = ({cpf, skip, take, lastVisible}) => {
+  return getDataByField({
+    collectionRef: alunosRef,
+    field: 'cpf',
+    fieldValue: cpf,
+    skip,
+    take,
+    lastVisible,
+    orderByField: 'dataNascimento',
+  })
+}
+
+export const getAlunosByNome = ({nome, skip, take, lastVisible}) => {
+  return getDataByField({
+    collectionRef: alunosRef,
+    field: 'nome',
+    fieldValue: nome,
+    skip,
+    take,
+    lastVisible,
+    orderByField: 'dataNascimento',
+  })
 }
 
 /**

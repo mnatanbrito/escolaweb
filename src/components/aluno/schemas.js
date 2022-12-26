@@ -29,6 +29,7 @@ export const cadastroAluno = object().shape({
   endereco: endereco.required().nullable(true),
 })
 
+// TODO: use the proper firestore sdk mechanism for these conversions
 export const converter = (dadosAluno) => {
   return {
     ...dadosAluno,
