@@ -27,7 +27,8 @@ import useNotification from '../../shared/hooks/useNotification'
 import ModalEscolaForm from './ModalEscolaForm'
 import useRoles from '../../shared/hooks/useRoles'
 
-const ListaEscolas = () => {
+const ListaEscolas = ({refresher}) => {
+  const refresherRef = React.useRef(refresher)
   const {isAdministrador} = useRoles()
   const {success: successNotification, error: errorNotification} =
     useNotification()
@@ -72,7 +73,8 @@ const ListaEscolas = () => {
   const onDelete = (idEscola) => {
     deleteEscola(
       idEscola,
-      () => {
+      async () => {
+        await refetch()
         successNotification({
           title: 'Sucesso',
           description: 'Escola excluída com sucesso!',
@@ -113,6 +115,13 @@ const ListaEscolas = () => {
       )
     }
   }
+
+  React.useEffect(() => {
+    if (refresherRef.current !== refresher) {
+      refresherRef.current = refresher
+      refetch()
+    }
+  }, [refresher, refetch])
 
   if (isLoading) {
     return (

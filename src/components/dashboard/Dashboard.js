@@ -11,6 +11,8 @@ import FormRow from '../../shared/components/FormRow'
 import ModalEscolaForm from '../escola/ModalEscolaForm'
 
 export default function Dashboard() {
+  // TODO: remove this solution because it sucks
+  const [refresher, setRefresher] = React.useState(0)
   const {success, error} = useNotification()
   const addMutation = useMutation((dadosEscola) => addEscola(dadosEscola))
   const [showEscolaModal, setShowEscolaModal] = React.useState(false)
@@ -29,6 +31,7 @@ export default function Dashboard() {
       case 'add':
         addMutation.mutate(data, {
           onSuccess: () => {
+            setRefresher((prev) => prev + 1)
             success({
               title: 'Sucesso',
               description: 'Escola cadastrada com sucesso!',
@@ -53,7 +56,7 @@ export default function Dashboard() {
         <AlunosSemEscola />
       </FormRow>
       <MenuRapido onClick={onCommand} />
-      <MinhasEscolas />
+      <MinhasEscolas refresher={refresher} />
 
       <ModalEscolaForm
         isOpen={showEscolaModal}

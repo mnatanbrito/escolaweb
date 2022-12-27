@@ -3,11 +3,11 @@ import React from 'react'
 import ListaEscolas from './ListaEscolas'
 import Panel from '../../shared/components/Panel'
 
-const MinhasEscolas = () => {
+const MinhasEscolas = ({ refresher }) => {
   return (
     <>
       <Panel title="Minhas escolas">
-        <ListaEscolas />
+        <ListaEscolas refresher={refresher} />
       </Panel>
     </>
   )

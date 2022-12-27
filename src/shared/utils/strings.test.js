@@ -1,4 +1,4 @@
-import {maskCpf, unmaskCpf} from './strings'
+import {slugify, maskCpf, unmaskCpf} from './strings'
 
 describe('strings', () => {
   describe('maskCpf', () => {
@@ -17,6 +17,15 @@ describe('strings', () => {
   describe('unmaskCpf', () => {
     test('Should remove the mask correctly to complete cpf', () => {
       expect(unmaskCpf('123.456.789-12')).toBe('12345678912')
+    })
+  })
+
+  describe('slugify', () => {
+    test('Should return the correct slug for the strings', () => {
+      expect(slugify('Escola de Teste 5555')).toBe('escola-de-teste-5555')
+      expect(slugify('Colégio Sertão Maranhense')).toBe(
+        'colegio-sertao-maranhense'
+      )
     })
   })
 })
