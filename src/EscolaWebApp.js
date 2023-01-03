@@ -10,7 +10,13 @@ import GateKeeper from './components/auth/GateKeeper'
 import AuthContext from './components/auth/AuthContext'
 import Router from './shared/components/Router'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: process.env.NODE_ENV !== 'development',
+    },
+  },
+})
 
 const showReactQueryDevTools = false
 

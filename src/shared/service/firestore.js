@@ -28,19 +28,29 @@ export const getDataByField = async ({
   const results = []
   const q =
     skip !== 0
+      ? orderByField
+        ? query(
+            collectionRef,
+            where(field, operator, fieldValue),
+            orderBy(orderByField),
+            startAfter(lastVisible),
+            limit(take)
+          )
+        : query(
+            collectionRef,
+            where(field, operator, fieldValue),
+            startAfter(lastVisible),
+            limit(take)
+          )
+      : orderByField
       ? query(
           collectionRef,
           where(field, operator, fieldValue),
           orderBy(orderByField),
-          startAfter(lastVisible),
           limit(take)
         )
-      : query(
-          collectionRef,
-          where(field, operator, fieldValue),
-          orderBy(orderByField),
-          limit(take)
-        )
+      : query(collectionRef, where(field, operator, fieldValue), limit(take))
+
   const documentSnapshots = await getDocs(q)
 
   documentSnapshots.forEach(unwrapDataInCollection(results))

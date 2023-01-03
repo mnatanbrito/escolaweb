@@ -46,7 +46,6 @@ export const getAlunosByCPF = ({cpf, skip, take, lastVisible}) => {
     skip,
     take,
     lastVisible,
-    orderByField: 'dataNascimento',
   })
 }
 
@@ -58,7 +57,7 @@ export const getAlunosByNome = ({nome, skip, take, lastVisible}) => {
     skip,
     take,
     lastVisible,
-    orderByField: 'dataNascimento',
+    orderByField: 'nome',
   })
 }
 

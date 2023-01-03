@@ -10,6 +10,7 @@ import Panel from '../../shared/components/Panel'
 import SelectField from '../../shared/components/SelectField'
 import cpf from '../../shared/schemas/cpf'
 import {maskCpf, removeNonDigits} from '../../shared/utils/strings'
+import ListaAlunos from './ListaAlunos'
 import usePesquisaAlunosQuery from './usePesquisaAlunosQuery'
 
 const formularioPesquisaSchema = object().shape({
@@ -24,28 +25,27 @@ const formularioPesquisaSchema = object().shape({
   }),
 })
 
-const defaultValue = {
-  tipoPesquisa: 'nome',
-  nome: null,
-  cpf: null,
-}
-
 const items = [
-  {
-    label: 'Nome',
-    value: 'nome',
-  },
   {
     label: 'CPF',
     value: 'cpf',
   },
 ]
+const defaultValue = {
+  tipoPesquisa: items[0].value,
+  nome: null,
+  cpf: null,
+}
 
 const PesquisaAluno = () => {
-  const {results, search, isFetching, error} = usePesquisaAlunosQuery()
+  const {results, search, isFetching, isLoading, error} =
+    usePesquisaAlunosQuery()
   const onSubmit = ({tipoPesquisa, nome, cpf}, actions) => {
-    search(tipoPesquisa, tipoPesquisa === 'cpf' ? removeNonDigits(cpf) : nome)
+    const searchParams = tipoPesquisa === 'cpf' ? removeNonDigits(cpf) : nome
+    search(tipoPesquisa, searchParams)
   }
+
+  const hasResults = (results || []).length > 0
 
   return (
     <ContentLayout title="Pesquisa">
@@ -90,9 +90,16 @@ const PesquisaAluno = () => {
                 </FormRow>
               </Form>
             </Panel>
-            <Panel title="Alunos encontrados">
-              {JSON.stringify(error?.message)}
-            </Panel>
+            {hasResults && (
+              <Panel title="Alunos encontrados">
+                <ListaAlunos
+                  alunos={results}
+                  error={error}
+                  isLoading={isLoading}
+                  commands={['view']}
+                />
+              </Panel>
+            )}
           </>
         )}
       </Formik>

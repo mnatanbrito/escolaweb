@@ -13,9 +13,9 @@ import ModalEscolaForm from '../escola/ModalEscolaForm'
 export default function Dashboard() {
   // TODO: remove this solution because it sucks
   const [refresher, setRefresher] = React.useState(0)
+  const [showEscolaModal, setShowEscolaModal] = React.useState(false)
   const {success, error} = useNotification()
   const addMutation = useMutation((dadosEscola) => addEscola(dadosEscola))
-  const [showEscolaModal, setShowEscolaModal] = React.useState(false)
 
   const onCommand = (cmd) => {
     switch (cmd) {

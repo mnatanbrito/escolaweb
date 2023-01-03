@@ -17,12 +17,14 @@ import {
 import {map} from 'lodash'
 import {FaHome, FaRedo, FaEdit} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
+import {formatEndereco} from '../../shared/utils/strings'
 
 export default function ListaAlunos({
   isLoading,
   error,
   alunos,
   emptyMessage = 'Nenhum aluno cadastrado.',
+  commands = ['view', 'edit'],
 }) {
   if (isLoading) {
     return (
@@ -63,7 +65,7 @@ export default function ListaAlunos({
         <Tr>
           <Th>Nome</Th>
           <Th>Endereço</Th>
-          <Th>Opções</Th>
+          {commands.length > 0 && <Th>Opções</Th>}
         </Tr>
       </Thead>
       <Tbody>
@@ -75,27 +77,32 @@ export default function ListaAlunos({
           )}
           {!emptyData && (
             <>
-              {map(alunos, ({id, nome, email}) => (
+              {map(alunos, ({id, nome, endereco}) => (
                 <Tr key={id}>
                   <Td>{nome}</Td>
-                  <Td></Td>
+                  <Td>{formatEndereco(endereco)}</Td>
                   <Td>
                     <Stack direction="row" spacing={4}>
                       <HStack spacing="15px">
-                        <Link to={`/alunos/${id}`} title={nome}>
+                        {commands.includes('view') && (
+                          <Link to={`/alunos/${id}`} title={nome}>
+                            <IconButton
+                              icon={<FaHome />}
+                              colorScheme="blue"
+                              variant="outline"
+                              title="Ir para a página do aluno"
+                            />
+                          </Link>
+                        )}
+
+                        {commands.includes('edit') && (
                           <IconButton
-                            icon={<FaHome />}
+                            icon={<FaEdit />}
                             colorScheme="blue"
                             variant="outline"
-                            title="Ir para a página do aluno"
+                            title="Editar dados do aluno"
                           />
-                        </Link>
-                        <IconButton
-                          icon={<FaEdit />}
-                          colorScheme="blue"
-                          variant="outline"
-                          title="Editar dados do aluno"
-                        />
+                        )}
                       </HStack>
                     </Stack>
                   </Td>
