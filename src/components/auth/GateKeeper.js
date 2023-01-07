@@ -7,25 +7,46 @@ import SplashScreen from './SplashScreen'
 import UserInfoContext from './UserInfoContext'
 
 export default function GateKeeper({children}) {
-  const authContext = useContext(AuthContext)
+  const auth = useContext(AuthContext)
+
   const [hasCheckedAuth, setHasCheckedAuth] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userInfo, setUserInfo] = useState(null)
 
   useEffect(() => {
-    const authStateChanged = (user) => {
-      setHasCheckedAuth(true)
-      if (user) {
-        setIsAuthenticated(true)
-        setUserInfo(user)
-      } else {
-        setIsAuthenticated(false)
-        setUserInfo(null)
+    const checkAuthState = async () => {
+      if (auth) {
+        try {
+          const {
+            data: {session},
+          } = await auth.getSession()
+          if (session) {
+            setIsAuthenticated(true)
+            setUserInfo(session.user)
+          } else {
+            setIsAuthenticated(false)
+            setUserInfo(null)
+          }
+        } catch (err) {
+          // TODO: log it somewhere for auditing?
+          console.error('User authentication failed', {
+            err,
+          })
+          setIsAuthenticated(false)
+          setUserInfo(null)
+        }
+
+        auth.onAuthStateChange((event, session) => {
+          setUserInfo(session?.user)
+          setIsAuthenticated(event === 'SIGNED_OUT')
+        })
+
+        setHasCheckedAuth(true)
       }
     }
 
-    onAuthStateChanged(authContext, authStateChanged)
-  }, [authContext])
+    checkAuthState()
+  }, [auth])
 
   if (!hasCheckedAuth) {
     return <SplashScreen />

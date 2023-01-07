@@ -1,16 +1,19 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {Flex, Box, Heading, VStack} from '@chakra-ui/react'
 import {useMutation} from 'react-query'
-import {signInWithEmailAndPassword} from 'firebase/auth'
+// import {signInWithEmailAndPassword} from 'firebase/auth'
 
+import {useAuthContext} from './AuthContext'
 import SignInForm from './SignInForm'
-import AuthContext from './AuthContext'
 
 export default function SignIn() {
-  const authContext = useContext(AuthContext)
+  const authContext = useAuthContext()
 
-  const mutation = useMutation((values) =>
-    signInWithEmailAndPassword(authContext, values.email, values.senha)
+  const mutation = useMutation(({email, senha: password}) =>
+    authContext.signInWithPassword({
+      email,
+      password,
+    })
   )
 
   return (
