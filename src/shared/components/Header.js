@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {
   Stack,
   Menu,
@@ -14,13 +14,12 @@ import {FaChevronDown} from 'react-icons/fa'
 import {useMutation} from 'react-query'
 import {Link} from 'react-router-dom'
 
-import {formatDisplayName} from '../utils/strings'
-import AuthContext from '../../components/auth/AuthContext'
-import UserInfoContext from '../../components/auth/UserInfoContext'
+import useUserInfoContext from '../../components/auth/useUserInfoContext'
+import useAuthContext from '../../components/auth/useAuthContext'
 
 export default function Header() {
-  const authContext = useContext(AuthContext)
-  const userInfo = useContext(UserInfoContext)
+  const authContext = useAuthContext()
+  const userInfo = useUserInfoContext()
   const mutation = useMutation(() => authContext.signOut())
 
   return (
@@ -41,7 +40,7 @@ export default function Header() {
                       src={userInfo.photoURL}
                     />
                   )}
-                  {formatDisplayName(userInfo.displayName)}
+                  {userInfo.displayName}
                 </>
               )}
             </HStack>

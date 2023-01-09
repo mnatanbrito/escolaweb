@@ -1,9 +1,8 @@
 import React from 'react'
 import {Flex, Box, Heading, VStack} from '@chakra-ui/react'
 import {useMutation} from 'react-query'
-// import {signInWithEmailAndPassword} from 'firebase/auth'
 
-import {useAuthContext} from './AuthContext'
+import useAuthContext from './useAuthContext'
 import SignInForm from './SignInForm'
 
 export default function SignIn() {
