@@ -22,6 +22,10 @@ export default function Header() {
   const userInfo = useUserInfoContext()
   const mutation = useMutation(() => authContext.signOut())
 
+  const onSignOut = async () => {
+    await mutation.mutateAsync()
+  }
+
   return (
     <Stack isInline justify="space-between" align="center" flex={1}>
       <Link to="/dashboard">
@@ -49,7 +53,7 @@ export default function Header() {
             <MenuItem>
               <Link to="/perfil">Perfil</Link>
             </MenuItem>
-            <MenuItem onClick={() => mutation.mutate()}>Sair</MenuItem>
+            <MenuItem onClick={onSignOut}>Sair</MenuItem>
           </MenuList>
         </Menu>
       </Stack>

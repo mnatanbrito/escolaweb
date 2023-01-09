@@ -1,13 +1,12 @@
-import React, {useEffect, useContext, useState} from 'react'
-import {onAuthStateChanged} from 'firebase/auth'
+import React, {useEffect, useState} from 'react'
 
 import SignIn from './SignIn'
-import AuthContext from './AuthContext'
 import SplashScreen from './SplashScreen'
 import UserInfoContext from './UserInfoContext'
+import useAuthContext from './useAuthContext'
 
 export default function GateKeeper({children}) {
-  const auth = useContext(AuthContext)
+  const authContext = useAuthContext()
 
   const [hasCheckedAuth, setHasCheckedAuth] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -15,38 +14,32 @@ export default function GateKeeper({children}) {
 
   useEffect(() => {
     const checkAuthState = async () => {
-      if (auth) {
-        try {
-          const {
-            data: {session},
-          } = await auth.getSession()
-          if (session) {
-            setIsAuthenticated(true)
-            setUserInfo(session.user)
-          } else {
-            setIsAuthenticated(false)
-            setUserInfo(null)
-          }
-        } catch (err) {
-          // TODO: log it somewhere for auditing?
-          console.error('User authentication failed', {
-            err,
-          })
-          setIsAuthenticated(false)
-          setUserInfo(null)
-        }
+      try {
+        const {
+          data: {session},
+        } = await authContext.getSession()
 
-        auth.onAuthStateChange((event, session) => {
+        setIsAuthenticated(!!session)
+        setUserInfo(session?.user)
+
+        authContext.onAuthStateChange((event, session) => {
           setUserInfo(session?.user)
-          setIsAuthenticated(event === 'SIGNED_OUT')
+          setIsAuthenticated(event !== 'SIGNED_OUT')
         })
-
+      } catch (err) {
+        // TODO: log it somewhere for auditing?
+        console.error('User authentication failed', {
+          err,
+        })
+        setIsAuthenticated(false)
+        setUserInfo(null)
+      } finally {
         setHasCheckedAuth(true)
       }
     }
 
     checkAuthState()
-  }, [auth])
+  }, [authContext])
 
   if (!hasCheckedAuth) {
     return <SplashScreen />

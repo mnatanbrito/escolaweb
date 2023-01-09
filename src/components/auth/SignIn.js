@@ -15,6 +15,10 @@ export default function SignIn() {
     })
   )
 
+  const onSubmit = async (signInInfo) => {
+    await mutation.mutateAsync(signInInfo)
+  }
+
   return (
     <Flex
       flex="1"
@@ -72,10 +76,7 @@ export default function SignIn() {
           alignItems="center"
           justifyContent="center"
         >
-          <SignInForm
-            isLoading={mutation.isLoading}
-            onSubmit={(signInInfo) => mutation.mutate(signInInfo)}
-          />
+          <SignInForm isLoading={mutation.isLoading} onSubmit={onSubmit} />
         </Box>
       </Box>
     </Flex>
